@@ -1,14 +1,14 @@
 #include <iostream>
-#include "Matrix.h"
+#include "Matrix4D.h"
 
 using namespace lmel;
 
 template <typename T>
-void show(const Matrix<T> & mat)
+void show(const Matrix4D<T> & mat)
 {
 	for (unsigned i = 0; i < mat.rows; ++i) {
 		for (unsigned j = 0; j < mat.cols; ++j)
-			std::cout << mat.get(i * mat.cols + j) << " ";
+			std::cout << mat(i, j) << " ";
 
 		std::cout << "\n";
 	}
@@ -16,10 +16,20 @@ void show(const Matrix<T> & mat)
 
 int main()
 {
-	Matrix<int> mat(0);
-	Matrix<int> mat0(0);
+	Matrix4D<int> mat(0);
+	Matrix4D<int> mat0(0);
 
 	std::cout << (mat == mat0 ? "EQ!\n" : "NEQ!\n");
+
+	Matrix4D<int> nums =
+	{
+		{1, 3, 4, 5},
+		{1, 1, 4, 5},
+		{1, 0, 1, 5},
+		{1, 0, 0, 1}
+	};
+
+	show(nums);
 
 	mat(0, 0) = 1;
 	mat(1, 0) = 1;
@@ -33,7 +43,7 @@ int main()
 	std::cout << "\n";
 
 	mat.transpose();
-	Matrix<int> mat2 = mat * 2;
+	Matrix4D<int> mat2 = mat * 2;
 
 	show(mat2);
 
