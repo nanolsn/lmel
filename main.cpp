@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Matrix4D.h"
+#include "SquareMatrix.h"
 
 using namespace lmel;
 
-template <typename T>
-void show(const Matrix4D<T> & mat)
+template <typename T, unsigned N>
+void show(const SquareMatrix<T, N> & mat)
 {
 	for (unsigned i = 0; i < mat.rows; ++i) {
 		for (unsigned j = 0; j < mat.cols; ++j)
@@ -16,13 +16,13 @@ void show(const Matrix4D<T> & mat)
 
 int main()
 {
-	Matrix4D<int> mat(0);
-	Matrix4D<int> mat0(0);
+	SquareMatrix<int, 4> mat(0);
+	SquareMatrix<int, 4> mat0(0);
 
 	std::cout << (mat == mat0 ? "EQ!\n" : "NEQ!\n");
 
 	// Init matrix with values
-	Matrix4D<int> nums =
+	SquareMatrix<int, 4> nums =
 	{
 		1, 3, 4, 5,
 		1, 1, 4, 5,
@@ -46,7 +46,7 @@ int main()
 	std::cout << "\n";
 
 	mat.transpose();
-	Matrix4D<int> mat2 = mat * 2;
+	SquareMatrix<int, 4> mat2 = mat * 2;
 
 	show(mat2);
 

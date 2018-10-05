@@ -5,19 +5,18 @@
 
 namespace lmel
 {
-	template <typename T>
-	class Matrix4D
+	template <typename T, unsigned N>
+	class SquareMatrix
 	{
 	private:
-		static const unsigned dimension = 4;
-		T data[dimension][dimension];
+		T data[N][N];
 
 	public:
-		static const unsigned rows = dimension;
-		static const unsigned cols = dimension;
+		static const unsigned rows = N;
+		static const unsigned cols = N;
 
 		// Constructor with init value
-		explicit Matrix4D(T init)
+		explicit SquareMatrix(T init)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -25,9 +24,9 @@ namespace lmel
 		}
 
 		// Initializer list constructor
-		Matrix4D(std::initializer_list<T> il)
+		SquareMatrix(std::initializer_list<T> il)
 		{
-			assert(il.size() == dimension * dimension);
+			assert(il.size() == N * N);
 
 			auto it = il.begin();
 
@@ -37,7 +36,7 @@ namespace lmel
 		}
 		
 		// Copy constructor (it doesn't work)
-		Matrix4D(const Matrix4D<T> & ref)
+		SquareMatrix(const SquareMatrix<T, N> & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -45,10 +44,10 @@ namespace lmel
 		}
 
 		// Empty destructor
-		virtual ~Matrix4D() {}
+		virtual ~SquareMatrix() {}
 
 		// Assignment operator
-		Matrix4D<T> & operator=(const Matrix4D<T> & val)
+		SquareMatrix<T, N> & operator=(const SquareMatrix<T, N> & val)
 		{
 			if (&val == this)
 				return *this;
@@ -62,9 +61,9 @@ namespace lmel
 
 		// Default math operations:
 
-		Matrix4D<T> operator+(const Matrix4D<T> & val)
+		SquareMatrix<T, N> operator+(const SquareMatrix<T, N> & val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -73,9 +72,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> operator-(const Matrix4D<T> & val)
+		SquareMatrix<T, N> operator-(const SquareMatrix<T, N> & val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -84,9 +83,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> operator*(const Matrix4D<T> & val)
+		SquareMatrix<T, N> operator*(const SquareMatrix<T, N> & val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -96,7 +95,7 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> & operator+=(const Matrix4D<T> & val)
+		SquareMatrix<T, N> & operator+=(const SquareMatrix<T, N> & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -105,7 +104,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> & operator-=(const Matrix4D<T> & val)
+		SquareMatrix<T, N> & operator-=(const SquareMatrix<T, N> & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -114,9 +113,9 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> & operator*=(const Matrix4D<T> & val)
+		SquareMatrix<T, N> & operator*=(const SquareMatrix<T, N> & val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -130,9 +129,9 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> operator+(T val)
+		SquareMatrix<T, N> operator+(T val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -141,9 +140,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> operator-(T val)
+		SquareMatrix<T, N> operator-(T val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -152,9 +151,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> operator*(T val)
+		SquareMatrix<T, N> operator*(T val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -163,9 +162,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> operator/(T val)
+		SquareMatrix<T, N> operator/(T val)
 		{
-			Matrix4D result(0);
+			SquareMatrix<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -174,7 +173,7 @@ namespace lmel
 			return result;
 		}
 
-		Matrix4D<T> & operator+=(T val)
+		SquareMatrix<T, N> & operator+=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -183,7 +182,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> & operator-=(T val)
+		SquareMatrix<T, N> & operator-=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -192,7 +191,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> & operator*=(T val)
+		SquareMatrix<T, N> & operator*=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -201,7 +200,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix4D<T> & operator/=(T val)
+		SquareMatrix<T, N> & operator/=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -212,7 +211,7 @@ namespace lmel
 
 		// Compare operations:
 
-		bool operator==(const Matrix4D<T> & m) const
+		bool operator==(const SquareMatrix<T, N> & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -222,7 +221,7 @@ namespace lmel
 			return true;
 		}
 
-		bool operator!=(const Matrix4D<T> & m) const
+		bool operator!=(const SquareMatrix<T, N> & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -234,36 +233,13 @@ namespace lmel
 
 		double determinant() const
 		{
-			return
-				data[0][3] * data[1][2] * data[2][1] * data[3][0] -
-				data[0][2] * data[1][3] * data[2][1] * data[3][0] -
-				data[0][3] * data[1][1] * data[2][2] * data[3][0] +
-				data[0][1] * data[1][3] * data[2][2] * data[3][0] +
-				data[0][2] * data[1][1] * data[2][3] * data[3][0] -
-				data[0][1] * data[1][2] * data[2][3] * data[3][0] -
-				data[0][3] * data[1][2] * data[2][0] * data[3][1] +
-				data[0][2] * data[1][3] * data[2][0] * data[3][1] +
-				data[0][3] * data[1][0] * data[2][2] * data[3][1] -
-				data[0][0] * data[1][3] * data[2][2] * data[3][1] -
-				data[0][2] * data[1][0] * data[2][3] * data[3][1] +
-				data[0][0] * data[1][2] * data[2][3] * data[3][1] +
-				data[0][3] * data[1][1] * data[2][0] * data[3][2] -
-				data[0][1] * data[1][3] * data[2][0] * data[3][2] -
-				data[0][3] * data[1][0] * data[2][1] * data[3][2] +
-				data[0][0] * data[1][3] * data[2][1] * data[3][2] +
-				data[0][1] * data[1][0] * data[2][3] * data[3][2] -
-				data[0][0] * data[1][1] * data[2][3] * data[3][2] -
-				data[0][2] * data[1][1] * data[2][0] * data[3][3] +
-				data[0][1] * data[1][2] * data[2][0] * data[3][3] +
-				data[0][2] * data[1][0] * data[2][1] * data[3][3] -
-				data[0][0] * data[1][2] * data[2][1] * data[3][3] -
-				data[0][1] * data[1][0] * data[2][2] * data[3][3] +
-				data[0][0] * data[1][1] * data[2][2] * data[3][3];
+			// TODO: Write recursive determinant method
+			return 0.0;
 		}
 
 		void transpose()
 		{
-			Matrix4D<T> tmp = *this;
+			SquareMatrix<T, N> tmp = *this;
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
