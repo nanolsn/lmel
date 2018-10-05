@@ -21,6 +21,7 @@ int main()
 
 	std::cout << (mat == mat0 ? "EQ!\n" : "NEQ!\n");
 
+	// Init matrix with values
 	Matrix4D<int> nums =
 	{
 		1, 3, 4, 5,
@@ -65,6 +66,8 @@ int main()
 	show(mat);
 
 	std::cout << "\n";
+
+	std::cout << "Det: " << mat.determinant() << "\n";
 
 	getchar();
 	return 0;

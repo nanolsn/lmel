@@ -16,6 +16,7 @@ namespace lmel
 		static const unsigned rows = dimension;
 		static const unsigned cols = dimension;
 
+		// Constructor with init value
 		explicit Matrix4D(T init)
 		{
 			for (unsigned i = 0; i < rows; ++i)
@@ -23,6 +24,7 @@ namespace lmel
 					data[i][j] = init;
 		}
 
+		// Initializer list constructor
 		Matrix4D(std::initializer_list<T> il)
 		{
 			assert(il.size() == dimension * dimension);
@@ -33,7 +35,8 @@ namespace lmel
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = *it++;
 		}
-
+		
+		// Copy constructor (it doesn't work)
 		Matrix4D(const Matrix4D<T> & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
@@ -41,8 +44,10 @@ namespace lmel
 					data[i][j] = ref.data[i][j];
 		}
 
+		// Empty destructor
 		virtual ~Matrix4D() {}
 
+		// Assignment operator
 		Matrix4D<T> & operator=(const Matrix4D<T> & val)
 		{
 			if (&val == this)
@@ -54,7 +59,9 @@ namespace lmel
 
 			return *this;
 		}
-                                                                                                                                                                                              
+
+		// Default math operations:
+
 		Matrix4D<T> operator+(const Matrix4D<T> & val)
 		{
 			Matrix4D result(0);
@@ -203,6 +210,8 @@ namespace lmel
 			return *this;
 		}
 
+		// Compare operations:
+
 		bool operator==(const Matrix4D<T> & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
@@ -223,6 +232,35 @@ namespace lmel
 			return false;
 		}
 
+		double determinant() const
+		{
+			return
+				data[0][3] * data[1][2] * data[2][1] * data[3][0] -
+				data[0][2] * data[1][3] * data[2][1] * data[3][0] -
+				data[0][3] * data[1][1] * data[2][2] * data[3][0] +
+				data[0][1] * data[1][3] * data[2][2] * data[3][0] +
+				data[0][2] * data[1][1] * data[2][3] * data[3][0] -
+				data[0][1] * data[1][2] * data[2][3] * data[3][0] -
+				data[0][3] * data[1][2] * data[2][0] * data[3][1] +
+				data[0][2] * data[1][3] * data[2][0] * data[3][1] +
+				data[0][3] * data[1][0] * data[2][2] * data[3][1] -
+				data[0][0] * data[1][3] * data[2][2] * data[3][1] -
+				data[0][2] * data[1][0] * data[2][3] * data[3][1] +
+				data[0][0] * data[1][2] * data[2][3] * data[3][1] +
+				data[0][3] * data[1][1] * data[2][0] * data[3][2] -
+				data[0][1] * data[1][3] * data[2][0] * data[3][2] -
+				data[0][3] * data[1][0] * data[2][1] * data[3][2] +
+				data[0][0] * data[1][3] * data[2][1] * data[3][2] +
+				data[0][1] * data[1][0] * data[2][3] * data[3][2] -
+				data[0][0] * data[1][1] * data[2][3] * data[3][2] -
+				data[0][2] * data[1][1] * data[2][0] * data[3][3] +
+				data[0][1] * data[1][2] * data[2][0] * data[3][3] +
+				data[0][2] * data[1][0] * data[2][1] * data[3][3] -
+				data[0][0] * data[1][2] * data[2][1] * data[3][3] -
+				data[0][1] * data[1][0] * data[2][2] * data[3][3] +
+				data[0][0] * data[1][1] * data[2][2] * data[3][3];
+		}
+
 		void transpose()
 		{
 			Matrix4D<T> tmp = *this;
@@ -231,6 +269,8 @@ namespace lmel
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = tmp.data[j][i];
 		}
+
+		// get/set selected element:
 
 		T & operator()(const unsigned & row, const unsigned & col)
 		{
