@@ -2,7 +2,6 @@
 
 #include <initializer_list>
 #include <cassert>
-#include <algorithm>
 
 namespace lmel
 {
@@ -10,45 +9,36 @@ namespace lmel
 	class Matrix4D
 	{
 	private:
-		static const unsigned size = 4 * 4;
-		T data[size];
+		static const unsigned dimension = 4;
+		T data[dimension][dimension];
 
 	public:
-		static const unsigned rows = 4;
-		static const unsigned cols = 4;
+		static const unsigned rows = dimension;
+		static const unsigned cols = dimension;
 
 		explicit Matrix4D(T init)
-			: data
 		{
-			init, init, init, init,
-			init, init, init, init,
-			init, init, init, init,
-			init, init, init, init
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = init;
 		}
-		{}
 
-		Matrix4D(std::initializer_list<std::initializer_list<T>> il)
+		Matrix4D(std::initializer_list<T> il)
 		{
-			assert(il.size() == 4);
-			assert(std::all_of(
-				il.begin(),
-				il.end(),
-				[](std::initializer_list<T> l)
-				{
-					return l.size() == 4;
-				}
-			));
+			assert(il.size() == dimension * dimension);
 
-			unsigned i = 0;
-			for (std::initializer_list<T> l : il)
-				for (T n : l)
-					data[i++] = n;
+			auto it = il.begin();
+
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = *it++;
 		}
 
 		Matrix4D(const Matrix4D<T> & ref)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] = ref.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = ref.data[i][j];
 		}
 
 		virtual ~Matrix4D() {}
@@ -58,8 +48,9 @@ namespace lmel
 			if (&val == this)
 				return *this;
 
-			for (unsigned i = 0; i < size; ++i)
-				data[i] = val.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = val.data[i][j];
 
 			return *this;
 		}
@@ -68,8 +59,9 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] + val.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] + val.data[i][j];
 
 			return result;
 		}
@@ -78,8 +70,9 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] - val.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] - val.data[i][j];
 
 			return result;
 		}
@@ -88,26 +81,28 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < rows; i++)
-				for (unsigned j = 0; j < cols; j++)
-					for (unsigned k = 0; k < rows; k++)
-						result.data[i * cols + j] += data[i * cols + k] * val.data[k * cols + j];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					for (unsigned k = 0; k < rows; ++k)
+						result.data[i][j] += data[i][k] * val.data[k][j];
 
 			return result;
 		}
 
 		Matrix4D<T> & operator+=(const Matrix4D<T> & val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] += val.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] += val.data[i][j];
 
 			return *this;
 		}
 
 		Matrix4D<T> & operator-=(const Matrix4D<T> & val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] -= val.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] -= val.data[i][j];
 
 			return *this;
 		}
@@ -116,13 +111,14 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < rows; i++)
-				for (unsigned j = 0; j < cols; j++)
-					for (unsigned k = 0; k < rows; k++)
-						result.data[i * cols + j] += data[i * cols + k] * val.data[k * cols + j];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					for (unsigned k = 0; k < rows; ++k)
+						result.data[i][j] += data[i][k] * val.data[k][j];
 
-			for (unsigned i = 0; i < size; ++i)
-				data[i] = result.data[i];
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = result.data[i][j];
 
 			return *this;
 		}
@@ -131,8 +127,9 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] + val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] + val;
 
 			return result;
 		}
@@ -141,8 +138,9 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] - val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] - val;
 
 			return result;
 		}
@@ -151,8 +149,9 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] * val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] * val;
 
 			return result;
 		}
@@ -161,84 +160,88 @@ namespace lmel
 		{
 			Matrix4D result(0);
 
-			for (unsigned i = 0; i < size; ++i)
-				result.data[i] = data[i] / val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[i][j] / val;
 
 			return result;
 		}
 
 		Matrix4D<T> & operator+=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] += val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] += val;
 
 			return *this;
 		}
 
 		Matrix4D<T> & operator-=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] -= val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] -= val;
 
 			return *this;
 		}
 
 		Matrix4D<T> & operator*=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] *= val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] *= val;
 
 			return *this;
 		}
 
 		Matrix4D<T> & operator/=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
-				data[i] /= val;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] /= val;
 
 			return *this;
 		}
 
 		bool operator==(const Matrix4D<T> & m) const
 		{
-			for (unsigned i = 0; i < size; ++i)
-				if (data[i] != m.data[i])
-					return false;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					if (data[i][j] != m.data[i][j])
+						return false;
 
 			return true;
 		}
 
 		bool operator!=(const Matrix4D<T> & m) const
 		{
-			for (unsigned i = 0; i < size; ++i)
-				if (data[i] != m.data[i])
-					return true;
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					if (data[i][j] != m.data[i][j])
+						return true;
 
 			return false;
 		}
 
 		void transpose()
 		{
-			Matrix4D tmp(0);
-
-			for (unsigned i = 0; i < size; ++i)
-				tmp.data[i] = data[i];
+			Matrix4D<T> tmp = *this;
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i * cols + j] = tmp.data[j * cols + i];
+					data[i][j] = tmp.data[j][i];
 		}
 
 		T & operator()(const unsigned & row, const unsigned & col)
 		{
 			assert(row < rows && col < cols);
-			return data[row * rows + col];
+			return data[row][col];
 		}
 
 		const T & operator()(const unsigned & row, const unsigned & col) const
 		{
 			assert(row < rows && col < cols);
-			return data[row * rows + col];
+			return data[row][col];
 		}
 	};
 }
