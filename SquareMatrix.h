@@ -61,7 +61,7 @@ namespace lmel
 
 		// Default math operations:
 
-		SquareMatrix<T, N> operator+(const SquareMatrix<T, N> & val)
+		SquareMatrix<T, N> operator+(const SquareMatrix<T, N> & val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -72,7 +72,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator-(const SquareMatrix<T, N> & val)
+		SquareMatrix<T, N> operator-(const SquareMatrix<T, N> & val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -83,7 +83,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator*(const SquareMatrix<T, N> & val)
+		SquareMatrix<T, N> operator*(const SquareMatrix<T, N> & val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -129,7 +129,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> operator+(T val)
+		SquareMatrix<T, N> operator+(T val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -140,7 +140,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator-(T val)
+		SquareMatrix<T, N> operator-(T val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -151,7 +151,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator*(T val)
+		SquareMatrix<T, N> operator*(T val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -162,7 +162,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator/(T val)
+		SquareMatrix<T, N> operator/(T val) const
 		{
 			SquareMatrix<T, N> result(0);
 
@@ -231,6 +231,29 @@ namespace lmel
 			return false;
 		}
 
+		SquareMatrix<T, N - 1> minor(const unsigned row, const unsigned col) const
+		{
+			SquareMatrix<T, N - 1> result(0);
+
+			for (unsigned i = 0, x = 0; i < rows; ++i)
+			{
+				if (i == row)
+					continue;
+
+				for (unsigned j = 0, y = 0; j < cols; ++j)
+				{
+					if (j == col)
+						continue;
+
+					result(x, y++) = data[i][j];
+				}
+
+				++x;
+			}
+
+			return result;
+		}
+
 		double determinant() const
 		{
 			// TODO: Write recursive determinant method
@@ -248,13 +271,13 @@ namespace lmel
 
 		// get/set selected element:
 
-		T & operator()(const unsigned & row, const unsigned & col)
+		T & operator()(const unsigned row, const unsigned col)
 		{
 			assert(row < rows && col < cols);
 			return data[row][col];
 		}
 
-		const T & operator()(const unsigned & row, const unsigned & col) const
+		const T & operator()(const unsigned row, const unsigned col) const
 		{
 			assert(row < rows && col < cols);
 			return data[row][col];

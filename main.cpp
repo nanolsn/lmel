@@ -69,6 +69,16 @@ int main()
 
 	std::cout << "Det: " << mat.determinant() << "\n";
 
+	std::cout << "\n";
+
+	SquareMatrix<int, 3> min = mat.minor(0, 3);
+
+	std::cout << "Minor:\n";
+
+	show(min);
+
+	std::cout << "\n";
+
 	getchar();
 	return 0;
 }
