@@ -35,7 +35,7 @@ namespace lmel
 					data[i][j] = *it++;
 		}
 		
-		// Copy constructor (it doesn't work)
+		// Copy constructor
 		SquareMatrix(const SquareMatrix<T, N> & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
@@ -233,6 +233,8 @@ namespace lmel
 
 		SquareMatrix<T, N - 1> minor(const unsigned row, const unsigned col) const
 		{
+			assert(row < rows && col < cols);
+
 			SquareMatrix<T, N - 1> result(0);
 
 			for (unsigned i = 0, x = 0; i < rows; ++i)
@@ -282,5 +284,48 @@ namespace lmel
 			assert(row < rows && col < cols);
 			return data[row][col];
 		}
+	};
+
+	// 1x1 matrix specialization
+	template <typename T>
+	class SquareMatrix<T, 1>
+	{
+	private:
+		T data;
+
+	public:
+		static const unsigned rows = 1;
+		static const unsigned cols = 1;
+
+		explicit SquareMatrix(T init)
+		{
+			data = init;
+		}
+
+		// Compare operations:
+
+		bool operator==(const SquareMatrix<T, 1> & m) const
+		{
+			return data == m.data;
+		}
+
+		bool operator!=(const SquareMatrix<T, 1> & m) const
+		{
+			return data != m.data;
+		}
+
+		SquareMatrix<T, 1> minor(const unsigned row, const unsigned col) const
+		{
+			assert(!"Undefined minor matrix!");
+
+			return SquareMatrix<T, 1>(0);
+		}
+
+		double determinant() const
+		{
+			return static_cast<double>(data);
+		}
+
+		void transpose() {}
 	};
 }
