@@ -449,8 +449,12 @@ namespace lmel
 	template<typename T, unsigned N>
 	inline double determinant(const SquareMatrix<T, N> & m)
 	{
-		// TODO: Write recursive determinant method
-		return 0.0;
+		double det = 0;
+
+		for (unsigned i = 0; i < N; ++i)
+			det += (i % 2 == 0 ? 1 : -1) * m.data[0][i] * determinant(m.minor(0, i));
+
+		return det;
 	}
 
 	template<typename T>

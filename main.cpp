@@ -67,13 +67,14 @@ int main()
 
 	std::cout << "\n";
 
-	SquareMatrix<int, 2> m2 = 
+	SquareMatrix<int, 3> m2 = 
 	{
-		2, 1,
-		-2, 0
+		2, 1, 5,
+		-2, 0, 5,
+		4, 3, 2
 	};
 
-	std::cout << "Det: " << m2.determinant() << "\n";
+	std::cout << "Det: " << determinant(m2) << "\n";
 
 	std::cout << "\n";
 
