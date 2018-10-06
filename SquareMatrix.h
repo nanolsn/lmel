@@ -256,12 +256,6 @@ namespace lmel
 			return result;
 		}
 
-		double determinant() const
-		{
-			// TODO: Write recursive determinant method
-			return 0.0;
-		}
-
 		void transpose()
 		{
 			SquareMatrix<T, N> tmp = *this;
@@ -284,6 +278,12 @@ namespace lmel
 			assert(row < rows && col < cols);
 			return data[row][col];
 		}
+
+		template <typename T, unsigned N>
+		friend double determinant(const SquareMatrix<T, N> & m);
+
+		template <typename T>
+		friend double determinant(const SquareMatrix<T, 2> & m);
 	};
 
 	// 1x1 matrix specialization
@@ -426,11 +426,6 @@ namespace lmel
 			return SquareMatrix<T, 1>(0);
 		}
 
-		double determinant() const
-		{
-			return static_cast<double>(data);
-		}
-
 		void transpose() {}
 
 		// get/set selected element:
@@ -446,5 +441,27 @@ namespace lmel
 			assert(row == 0 && col == 0);
 			return data;
 		}
+
+		template <typename T>
+		friend double determinant(const SquareMatrix<T, 1> & m);
 	};
+
+	template<typename T, unsigned N>
+	inline double determinant(const SquareMatrix<T, N> & m)
+	{
+		// TODO: Write recursive determinant method
+		return 0.0;
+	}
+
+	template<typename T>
+	inline double determinant(const SquareMatrix<T, 2> & m)
+	{
+		return m.data[0][0] * m.data[1][1] - m.data[1][0] * m.data[0][1];
+	}
+
+	template<typename T>
+	inline double determinant(const SquareMatrix<T, 1> & m)
+	{
+		return static_cast<double>(m.data);
+	}
 }
