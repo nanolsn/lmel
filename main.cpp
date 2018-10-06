@@ -67,7 +67,13 @@ int main()
 
 	std::cout << "\n";
 
-	std::cout << "Det: " << mat.determinant() << "\n";
+	SquareMatrix<int, 2> m2 = 
+	{
+		2, 1,
+		-2, 0
+	};
+
+	std::cout << "Det: " << m2.determinant() << "\n";
 
 	std::cout << "\n";
 
@@ -76,6 +82,13 @@ int main()
 	std::cout << "Minor:\n";
 
 	show(min);
+
+	std::cout << "\n";
+
+	SquareMatrix<int, 1> m1(3);
+	SquareMatrix<int, 1> m12 = { 12 };
+
+	show(m1 * m12 * 2);
 
 	std::cout << "\n";
 

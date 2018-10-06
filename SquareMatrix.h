@@ -297,9 +297,114 @@ namespace lmel
 		static const unsigned rows = 1;
 		static const unsigned cols = 1;
 
+		// Constructor with init value
 		explicit SquareMatrix(T init)
 		{
 			data = init;
+		}
+
+		// Initializer list constructor
+		SquareMatrix(std::initializer_list<T> il)
+		{
+			assert(il.size() == 1);
+
+			auto it = il.begin();
+			data = *it;
+		}
+
+		// Copy constructor
+		SquareMatrix(const SquareMatrix<T, 1> & ref)
+		{
+			data = ref.data;
+		}
+
+		// Assignment operator
+		SquareMatrix<T, 1> & operator=(const SquareMatrix<T, 1> & val)
+		{
+			if (&val == this)
+				return *this;
+
+			data = val.data;
+			return *this;
+		}
+
+		// Default math operations:
+
+		SquareMatrix<T, 1> operator+(const SquareMatrix<T, 1> & val) const
+		{
+			return SquareMatrix<T, 1>(data + val.data);
+		}
+
+		SquareMatrix<T, 1> operator-(const SquareMatrix<T, 1> & val) const
+		{
+			return SquareMatrix<T, 1>(data - val.data);
+		}
+
+		SquareMatrix<T, 1> operator*(const SquareMatrix<T, 1> & val) const
+		{
+			return SquareMatrix<T, 1>(data * val.data);
+		}
+
+		SquareMatrix<T, 1> & operator+=(const SquareMatrix<T, 1> & val)
+		{
+			data += val.data;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> & operator-=(const SquareMatrix<T, 1> & val)
+		{
+			data -= val.data;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> & operator*=(const SquareMatrix<T, 1> & val)
+		{
+			data *= val.data;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> operator+(T val) const
+		{
+			return SquareMatrix<T, 1>(data + val);
+		}
+
+		SquareMatrix<T, 1> operator-(T val) const
+		{
+			return SquareMatrix<T, 1>(data - val);
+		}
+
+		SquareMatrix<T, 1> operator*(T val) const
+		{
+			return SquareMatrix<T, 1>(data * val);
+		}
+
+		SquareMatrix<T, 1> operator/(T val) const
+		{
+			return SquareMatrix<T, 1>(data / val);
+		}
+
+		SquareMatrix<T, 1> & operator+=(T val)
+		{
+			data += val;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> & operator-=(T val)
+		{
+			data -= val;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> & operator*=(T val)
+		{
+			data *= val;
+			return *this;
+		}
+
+		SquareMatrix<T, 1> & operator/=(T val)
+		{
+			data /= val;
+			return *this;
 		}
 
 		// Compare operations:
@@ -327,5 +432,19 @@ namespace lmel
 		}
 
 		void transpose() {}
+
+		// get/set selected element:
+
+		T & operator()(const unsigned row, const unsigned col)
+		{
+			assert(row == 0 && col == 0);
+			return data;
+		}
+
+		const T & operator()(const unsigned row, const unsigned col) const
+		{
+			assert(row == 0 && col == 0);
+			return data;
+		}
 	};
 }
