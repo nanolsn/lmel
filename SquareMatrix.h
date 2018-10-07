@@ -280,10 +280,10 @@ namespace lmel
 		}
 
 		template <typename T, unsigned N>
-		friend double determinant(const SquareMatrix<T, N> & m);
+		friend T determinant(const SquareMatrix<T, N> & m);
 
 		template <typename T>
-		friend double determinant(const SquareMatrix<T, 2> & m);
+		friend T determinant(const SquareMatrix<T, 2> & m);
 	};
 
 	// 1x1 matrix specialization
@@ -443,13 +443,13 @@ namespace lmel
 		}
 
 		template <typename T>
-		friend double determinant(const SquareMatrix<T, 1> & m);
+		friend T determinant(const SquareMatrix<T, 1> & m);
 	};
 
 	template<typename T, unsigned N>
-	inline double determinant(const SquareMatrix<T, N> & m)
+	inline T determinant(const SquareMatrix<T, N> & m)
 	{
-		double det = 0;
+		T det = 0;
 
 		for (unsigned i = 0; i < N; ++i)
 			det += (i % 2 == 0 ? 1 : -1) * m.data[0][i] * determinant(m.minor(0, i));
@@ -458,14 +458,14 @@ namespace lmel
 	}
 
 	template<typename T>
-	inline double determinant(const SquareMatrix<T, 2> & m)
+	inline T determinant(const SquareMatrix<T, 2> & m)
 	{
 		return m.data[0][0] * m.data[1][1] - m.data[1][0] * m.data[0][1];
 	}
 
 	template<typename T>
-	inline double determinant(const SquareMatrix<T, 1> & m)
+	inline T determinant(const SquareMatrix<T, 1> & m)
 	{
-		return static_cast<double>(m.data);
+		return m.data;
 	}
 }

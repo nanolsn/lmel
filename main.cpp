@@ -14,85 +14,37 @@ void show(const SquareMatrix<T, N> & mat)
 	}
 }
 
+void test(bool condition)
+{
+	std::cout << (condition ? "OK." : "Fail!") << "\n";
+}
+
 int main()
 {
-	SquareMatrix<int, 4> mat(0);
-	SquareMatrix<int, 4> mat0(0);
-
-	std::cout << (mat == mat0 ? "EQ!\n" : "NEQ!\n");
-
-	// Init matrix with values
-	SquareMatrix<int, 4> nums =
+	SquareMatrix<int, 3> m33_1 =
 	{
-		1, 3, 4, 5,
-		1, 1, 4, 5,
-		1, 0, 1, 5,
-		1, 0, 0, 1
+		1, 2, 3,
+		4, 5, 6,
+		7, 8, 9
 	};
 
-	show(nums);
-
-	std::cout << "\n";
-
-	mat(0, 0) = 1;
-	mat(1, 0) = 1;
-	mat(2, 0) = 3;
-	mat(3, 0) = 1;
-
-	mat(3, 3) = 4;
-
-	show(mat);
-
-	std::cout << "\n";
-
-	mat.transpose();
-	SquareMatrix<int, 4> mat2 = mat * 2;
-
-	show(mat2);
-
-	std::cout << (mat == mat2 ? "\nEQ!\n" : "\nNEQ!\n");
-
-	mat = mat + mat;
-	show(mat);
-
-	std::cout << "\n";
-
-	mat += mat;
-	show(mat);
-
-	std::cout << "\n";
-
-	mat *= mat2;
-	show(mat);
-
-	std::cout << "\n";
-
-	SquareMatrix<int, 3> m2 = 
+	SquareMatrix<int, 3> m33_2 =
 	{
-		2, 1, 5,
-		-2, 0, 5,
-		4, 3, 2
+		2, 2, 2,
+		4, 3, 2,
+		4, 4, 4
 	};
 
-	std::cout << "Det: " << determinant(m2) << "\n";
+	auto res_1 = m33_1 * m33_2;
+	SquareMatrix<int, 3> m33_3 =
+	{
+		22, 20, 18,
+		52, 47, 42,
+		82, 74, 66
+	};
 
-	std::cout << "\n";
-
-	SquareMatrix<int, 3> min = mat.minor(0, 3);
-
-	std::cout << "Minor:\n";
-
-	show(min);
-
-	std::cout << "\n";
-
-	SquareMatrix<int, 1> m1(3);
-	SquareMatrix<int, 1> m12 = { 12 };
-
-	show(m1 * m12 * 2);
-
-	std::cout << "\n";
-
+	test(res_1 == m33_3);
+	
 	getchar();
 	return 0;
 }
