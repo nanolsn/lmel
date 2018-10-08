@@ -1,5 +1,6 @@
 #include <iostream>
-#include "SquareMatrix.h"
+#include "lmel/SquareMatrix.h"
+#include "lmel/Vector.h"
 
 using namespace lmel;
 
@@ -21,6 +22,8 @@ void test(bool condition)
 
 int main()
 {
+	Vector<double, 6> v(12);
+
 	SquareMatrix<int, 3> m33_1 =
 	{
 		1, 2, 3,
