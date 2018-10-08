@@ -2,6 +2,7 @@
 
 #include <initializer_list>
 #include <cassert>
+#include "Vector.h"
 
 namespace lmel
 {
@@ -54,6 +55,30 @@ namespace lmel
 					data[i][j] = val.data[i][j];
 
 			return *this;
+		}
+
+		Vector<T, N> getRow(const unsigned row) const
+		{
+			assert(row < rows);
+
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < cols; ++i)
+				result(i) = data[row][i];
+
+			return result;
+		}
+
+		Vector<T, N> getCol(const unsigned col) const
+		{
+			assert(col < cols);
+
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < rows; ++i)
+				result(i) = data[i][col];
+
+			return result;
 		}
 
 		// Default math operations:
@@ -276,16 +301,6 @@ namespace lmel
 			return data[row][col];
 		}
 
-		unsigned getRows() const
-		{
-			return rows;
-		}
-
-		unsigned getCols() const
-		{
-			return cols;
-		}
-
 		template <typename T, unsigned N>
 		friend T determinant(const SquareMatrix<T, N> & m);
 
@@ -333,6 +348,20 @@ namespace lmel
 
 			data = val.data;
 			return *this;
+		}
+
+		Vector<T, 1> getRow(const unsigned row) const
+		{
+			assert(row == 0);
+
+			return Vector<T, 1>(data);
+		}
+
+		Vector<T, 1> getCol(const unsigned col) const
+		{
+			assert(col == 0);
+
+			return Vector<T, 1>(data);
 		}
 
 		// Default math operations:

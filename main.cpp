@@ -5,9 +5,17 @@
 using namespace lmel;
 
 template <typename T, unsigned N>
+void show(const Vector<T, N> & v)
+{
+	for (unsigned i = 0; i < v.size; ++i)
+		std::cout << v(i) << " ";
+}
+
+template <typename T, unsigned N>
 void show(const SquareMatrix<T, N> & mat)
 {
-	for (unsigned i = 0; i < mat.rows; ++i) {
+	for (unsigned i = 0; i < mat.rows; ++i)
+	{
 		for (unsigned j = 0; j < mat.cols; ++j)
 			std::cout << mat(i, j) << " ";
 
@@ -47,6 +55,26 @@ int main()
 	};
 
 	test(res_1 == m33_3);
+
+	std::cout << "\n";
+
+	auto v1 = m33_1.getRow(0);
+	auto v2 = m33_1.getCol(2);
+
+	show(v1);
+	std::cout << "\n";
+	show(v2);
+
+	std::cout << "\n";
+
+	SquareMatrix<int, 1> m11_1(12);
+
+	auto v21 = m11_1.getRow(0);
+	auto v22 = m11_1.getCol(0);
+
+	show(v21);
+	std::cout << "\n";
+	show(v22);
 	
 	getchar();
 	return 0;

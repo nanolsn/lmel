@@ -50,5 +50,19 @@ namespace lmel
 
 			return *this;
 		}
+
+		// get/set selected element:
+
+		T & operator()(const unsigned i)
+		{
+			assert(i < size);
+			return data[i];
+		}
+
+		const T & operator()(const unsigned i) const
+		{
+			assert(i < size);
+			return data[i];
+		}
 	};
 }
