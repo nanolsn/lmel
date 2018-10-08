@@ -51,6 +51,26 @@ namespace lmel
 			return *this;
 		}
 
+		// Compare operations:
+
+		bool operator==(const Vector<T, N> & v) const
+		{
+			for (unsigned i = 0; i < size; ++i)
+				if (data[i] != v.data[i])
+					return false;
+
+			return true;
+		}
+
+		bool operator!=(const Vector<T, N> & v) const
+		{
+			for (unsigned i = 0; i < size; ++i)
+				if (data[i] != v.data[i])
+					return true;
+
+			return false;
+		}
+
 		// get/set selected element:
 
 		T & operator()(const unsigned i)
