@@ -85,4 +85,31 @@ namespace lmel
 			return data[i];
 		}
 	};
+
+	template <typename T>
+	using Vector1D = Vector<T, 1>;
+
+	template <typename T>
+	using Vector2D = Vector<T, 2>;
+
+	template <typename T>
+	using Vector3D = Vector<T, 3>;
+
+	template <typename T>
+	using Vector4D = Vector<T, 4>;
+
+	template <typename T>
+	using Vector5D = Vector<T, 5>;
+
+	using IntVector1D = Vector<int, 1>;
+	using IntVector2D = Vector<int, 2>;
+	using IntVector3D = Vector<int, 3>;
+	using IntVector4D = Vector<int, 4>;
+	using IntVector5D = Vector<int, 5>;
+
+	using DoubleVector1D = Vector<double, 1>;
+	using DoubleVector2D = Vector<double, 2>;
+	using DoubleVector3D = Vector<double, 3>;
+	using DoubleVector4D = Vector<double, 4>;
+	using DoubleVector5D = Vector<double, 5>;
 }

@@ -24,10 +24,12 @@ void show(const SquareMatrix<T, N> & mat)
 }
 
 #include "test/Vector.cpp"
+#include "test/SquareMatrix.cpp"
 
 int main()
 {
 	testVector();
+	testSquareMatrix();
 	
 	getchar();
 	return 0;

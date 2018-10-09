@@ -481,4 +481,31 @@ namespace lmel
 		template <typename T>
 		friend T determinant(const SquareMatrix<T, 1> & m);
 	};
+
+	template <typename T>
+	using Matrix1D = SquareMatrix<T, 1>;
+
+	template <typename T>
+	using Matrix2D = SquareMatrix<T, 2>;
+
+	template <typename T>
+	using Matrix3D = SquareMatrix<T, 3>;
+
+	template <typename T>
+	using Matrix4D = SquareMatrix<T, 4>;
+
+	template <typename T>
+	using Matrix5D = SquareMatrix<T, 5>;
+
+	using IntMatrix1D = SquareMatrix<int, 1>;
+	using IntMatrix2D = SquareMatrix<int, 2>;
+	using IntMatrix3D = SquareMatrix<int, 3>;
+	using IntMatrix4D = SquareMatrix<int, 4>;
+	using IntMatrix5D = SquareMatrix<int, 5>;
+
+	using DoubleMatrix1D = SquareMatrix<double, 1>;
+	using DoubleMatrix2D = SquareMatrix<double, 2>;
+	using DoubleMatrix3D = SquareMatrix<double, 3>;
+	using DoubleMatrix4D = SquareMatrix<double, 4>;
+	using DoubleMatrix5D = SquareMatrix<double, 5>;
 }
