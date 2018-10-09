@@ -25,11 +25,13 @@ void show(const SquareMatrix<T, N> & mat)
 
 #include "test/Vector.cpp"
 #include "test/SquareMatrix.cpp"
+#include "test/determinant.cpp"
 
 int main()
 {
 	testVector();
 	testSquareMatrix();
+	testDeterminant();
 	
 	getchar();
 	return 0;
