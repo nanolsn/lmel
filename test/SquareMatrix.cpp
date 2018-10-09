@@ -36,7 +36,7 @@ void testSquareMatrix()
 		test(dm7 == dm4);
 	}
 
-	// Get row/col
+	// Get row/col/diagonal
 	{
 		IntMatrix5D m1(0);
 		m1(0, 0) = 5;
@@ -47,6 +47,14 @@ void testSquareMatrix()
 		m2(0, 0) = 1;
 		m2(1, 0) = 2;
 		test(m2.getCol(0) == IntVector3D{ 1, 2, 9 });
+
+		IntMatrix3D m3 =
+		{
+			1, 2, 34,
+			5, 6, 7,
+			8, 9, 0
+		};
+		test(m3.getDiagonal() == IntVector3D{ 1, 6, 0 });
 	}
 
 	// Math operations

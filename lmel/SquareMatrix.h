@@ -81,6 +81,16 @@ namespace lmel
 			return result;
 		}
 
+		Vector<T, N> getDiagonal() const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < N; ++i)
+				result(i) = data[i][i];
+
+			return result;
+		}
+
 		// Default math operations:
 
 		SquareMatrix<T, N> operator+(const SquareMatrix<T, N> & val) const
@@ -361,6 +371,11 @@ namespace lmel
 		{
 			assert(col == 0);
 
+			return Vector<T, 1>(data);
+		}
+
+		Vector<T, 1> getDiagonal() const
+		{
 			return Vector<T, 1>(data);
 		}
 
