@@ -6,7 +6,11 @@
 
 namespace lmel
 {
-	template <typename T, unsigned N>
+	template <
+		typename T,
+		unsigned N,
+		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+	>
 	class SquareMatrix
 	{
 	private:
@@ -523,4 +527,10 @@ namespace lmel
 	using DoubleMatrix3D = SquareMatrix<double, 3>;
 	using DoubleMatrix4D = SquareMatrix<double, 4>;
 	using DoubleMatrix5D = SquareMatrix<double, 5>;
+
+	using FloatMatrix1D = SquareMatrix<float, 1>;
+	using FloatMatrix2D = SquareMatrix<float, 2>;
+	using FloatMatrix3D = SquareMatrix<float, 3>;
+	using FloatMatrix4D = SquareMatrix<float, 4>;
+	using FloatMatrix5D = SquareMatrix<float, 5>;
 }

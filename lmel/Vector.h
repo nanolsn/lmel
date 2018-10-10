@@ -1,11 +1,16 @@
 #pragma once
 
+#include <type_traits>
 #include <initializer_list>
 #include <cassert>
 
 namespace lmel
 {
-	template <typename T, unsigned N>
+	template <
+		typename T,
+		unsigned N,
+		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+	>
 	class Vector
 	{
 	private:
@@ -112,4 +117,10 @@ namespace lmel
 	using DoubleVector3D = Vector<double, 3>;
 	using DoubleVector4D = Vector<double, 4>;
 	using DoubleVector5D = Vector<double, 5>;
+
+	using FloatVector1D = Vector<float, 1>;
+	using FloatVector2D = Vector<float, 2>;
+	using FloatVector3D = Vector<float, 3>;
+	using FloatVector4D = Vector<float, 4>;
+	using FloatVector5D = Vector<float, 5>;
 }
