@@ -56,6 +56,126 @@ namespace lmel
 			return *this;
 		}
 
+		// Default math operations:
+
+		Vector<T, N> operator+(const Vector<T, N> & val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] + val.data[i];
+
+			return result;
+		}
+
+		Vector<T, N> operator-(const Vector<T, N> & val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] + val.data[i];
+
+			return result;
+		}
+
+		Vector<T, N> operator*(const Vector<T, N> & val) const
+		{
+			T prod = 0;
+
+			for (unsigned i = 0; i < size; ++i)
+				prod += data[i] * val.data[i];
+
+			return prod;
+		}
+
+		Vector<T, N> & operator+=(const Vector<T, N> & val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] += val.data[i];
+
+			return *this;
+		}
+
+		Vector<T, N> & operator-=(const Vector<T, N> & val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] -= val.data[i];
+
+			return *this;
+		}
+
+		Vector<T, N> operator+(T val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] + val;
+
+			return result;
+		}
+
+		Vector<T, N> operator-(T val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] - val;
+
+			return result;
+		}
+
+		Vector<T, N> operator*(T val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] * val;
+
+			return result;
+		}
+
+		Vector<T, N> operator/(T val) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < size; ++i)
+				result.data[i] = data[i] / val;
+
+			return result;
+		}
+
+		Vector<T, N> & operator+=(T val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] += val;
+
+			return *this;
+		}
+
+		Vector<T, N> & operator-=(T val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] -= val;
+
+			return *this;
+		}
+
+		Vector<T, N> & operator*=(T val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] *= val;
+
+			return *this;
+		}
+
+		Vector<T, N> & operator/=(T val)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] /= val;
+
+			return *this;
+		}
+
 		// Compare operations:
 
 		bool operator==(const Vector<T, N> & v) const
