@@ -34,12 +34,12 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
-	DoubleVector3D v1(0.0);
-	
-	v1(1) = 2.1;
-	v1 *= 3;
+	IntVector2D v1 = { 1, 2 };
+	IntVector2D v2 = { 3, 4 };
 
-	show(v1);
+	IntMatrix2D mat = { v1, v2 };
+
+	show(mat);
 
 	getchar();
 	return 0;

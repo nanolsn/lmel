@@ -39,6 +39,24 @@ namespace lmel
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = *it++;
 		}
+
+		// Initializer list constructor (From vectors) 
+		SquareMatrix(std::initializer_list<Vector<T, N>> il)
+		{
+			assert(il.size() == N);
+
+			auto it = il.begin();
+
+			for (unsigned i = 0; i < rows; ++i)
+			{
+				Vector<T, N> v = *it;
+
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = v(j);
+
+				it++;
+			}
+		}
 		
 		// Copy constructor
 		SquareMatrix(const SquareMatrix<T, N> & ref)
