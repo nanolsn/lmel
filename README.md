@@ -18,4 +18,7 @@ DoubleVector3D firstRow = matrix.getRow(0);
 
 // Get the second value from vector
 double val = firstRow(1);
+
+// Get the matrix determinant
+double det = determinant(matrix);
 ```
