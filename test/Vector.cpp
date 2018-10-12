@@ -52,4 +52,11 @@ void testVector()
 		v3(0) = 4;
 		test(v3 == Vector<unsigned, 2>{ 4, 0 });
 	}
+
+	// Cross product
+	{
+		IntVector3D v1 = { 1, 2, 3 };
+		IntVector3D v2 = { 4, 5, 6 };
+		test(cross(v1, v2) == IntVector3D{ -3, -6, -3 });
+	}
 }

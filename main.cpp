@@ -34,13 +34,6 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
-	IntVector2D v1 = { 1, 2 };
-	IntVector2D v2 = { 3, 4 };
-
-	IntMatrix2D mat = { v1, v2 };
-
-	show(mat);
-
 	getchar();
 	return 0;
 }
