@@ -9,7 +9,7 @@ namespace lmel
 	template <
 		typename T,
 		unsigned N,
-		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
 	>
 	class SquareMatrix
 	{

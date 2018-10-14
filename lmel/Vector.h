@@ -10,7 +10,7 @@ namespace lmel
 	template <
 		typename T,
 		unsigned N,
-		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
 	>
 	class Vector
 	{
@@ -55,6 +55,37 @@ namespace lmel
 				data[i] = val.data[i];
 
 			return *this;
+		}
+
+		// Member aliases:
+
+		T & x()
+		{
+			return data[0];
+		}
+
+		template <typename = typename std::enable_if<(N > 1), T>::type>
+		T & y()
+		{
+			return data[1];
+		}
+
+		template <typename = typename std::enable_if<(N > 2), T>::type>
+		T & z()
+		{
+			return data[2];
+		}
+
+		template <typename = typename std::enable_if<(N > 3), T>::type>
+		T & w()
+		{
+			return data[3];
+		}
+
+		template <typename = typename std::enable_if<(N > 4), T>::type>
+		T & v()
+		{
+			return data[4];
 		}
 
 		// Vector length
@@ -242,8 +273,8 @@ namespace lmel
 		return Vector<T, 3>
 		{
 			v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1],
-				v1.data[0] * v2.data[2] - v1.data[2] * v2.data[0],
-				v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]
+			v1.data[0] * v2.data[2] - v1.data[2] * v2.data[0],
+			v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]
 		};
 	}
 
