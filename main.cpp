@@ -34,7 +34,8 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
-	IntVector3D v = { 0, 3, 0 };
+	DoubleVector3D v = { 3.0, 3.0, 7.0 };
+	v.normalize();
 	cout << v.length();
 
 	getchar();

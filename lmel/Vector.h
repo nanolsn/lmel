@@ -68,6 +68,15 @@ namespace lmel
 			return sqrt(sum);
 		}
 
+		// Normalize vector
+		void normalize()
+		{
+			double len = length();
+
+			for (unsigned i = 0; i < size; ++i)
+				data[i] /= len;
+		}
+
 		// Default math operations:
 
 		Vector<T, N> operator+(const Vector<T, N> & val) const
