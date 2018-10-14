@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <initializer_list>
 #include <cassert>
+#include <math.h>
 
 namespace lmel
 {
@@ -54,6 +55,17 @@ namespace lmel
 				data[i] = val.data[i];
 
 			return *this;
+		}
+
+		// Vector length
+		double length() const
+		{
+			T sum = 0;
+
+			for (unsigned i = 0; i < size; ++i)
+				sum += data[i] * data[i];
+
+			return sqrt(sum);
 		}
 
 		// Default math operations:
@@ -214,6 +226,18 @@ namespace lmel
 		friend Vector<T, 3> cross(const Vector<T, 3> & v1, const Vector<T, 3> & v2);
 	};
 
+	// Cross product
+	template <typename T>
+	Vector<T, 3> cross(const Vector<T, 3> & v1, const Vector<T, 3> & v2)
+	{
+		return Vector<T, 3>
+		{
+			v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1],
+				v1.data[0] * v2.data[2] - v1.data[2] * v2.data[0],
+				v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]
+		};
+	}
+
 	template <typename T>
 	using Vector1D = Vector<T, 1>;
 
@@ -246,16 +270,4 @@ namespace lmel
 	using FloatVector3D = Vector<float, 3>;
 	using FloatVector4D = Vector<float, 4>;
 	using FloatVector5D = Vector<float, 5>;
-
-	// Cross product
-	template <typename T>
-	Vector<T, 3> cross(const Vector<T, 3> & v1, const Vector<T, 3> & v2)
-	{
-		return Vector<T, 3>
-		{
-			v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1],
-			v1.data[0] * v2.data[2] - v1.data[2] * v2.data[0],
-			v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]
-		};
-	}
 }
