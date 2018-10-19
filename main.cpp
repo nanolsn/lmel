@@ -35,8 +35,13 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
-	show(createIdentityMatrix<int, 1>());
-	show(createIdentityMatrix<double, 5>() * 0.5);
+	DoubleMatrix3D m = createMatrixFromCols({
+		DoubleVector3D{ 1, 2, 3 },
+		DoubleVector3D{ 1, 2, 5 },
+		DoubleVector3D{ 8, 8, 8 }
+		});
+
+	show(m);
 
 	getchar();
 	return 0;

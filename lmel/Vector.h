@@ -4,6 +4,7 @@
 #include <initializer_list>
 #include <cassert>
 #include <math.h>
+#include "SquareMatrix.h"
 
 namespace lmel
 {

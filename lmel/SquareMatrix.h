@@ -353,6 +353,12 @@ namespace lmel
 
 		template <typename T, unsigned N>
 		friend SquareMatrix<T, N> createIdentityMatrix();
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il);
 	};
 
 	// 1x1 matrix specialization
@@ -541,6 +547,12 @@ namespace lmel
 
 		template <typename T, unsigned N>
 		friend SquareMatrix<T, N> createIdentityMatrix();
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il);
 	};
 
 	template <typename T>
@@ -583,6 +595,50 @@ namespace lmel
 
 		for (unsigned i = 0; i < N; ++i)
 			result.data[i][i] = 1;
+
+		return result;
+	}
+
+	template <typename T, unsigned N>
+	SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il)
+	{
+		assert(il.size() == N);
+
+		auto it = il.begin();
+
+		SquareMatrix<T, N> result(0);
+
+		for (unsigned i = 0; i < N; ++i)
+		{
+			auto vec = *it;
+
+			for (unsigned j = 0; j < N; ++j)
+				result.data[i][j] = vec(j);
+
+			it++;
+		}
+
+		return result;
+	}
+
+	template <typename T, unsigned N>
+	SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il)
+	{
+		assert(il.size() == N);
+
+		auto it = il.begin();
+
+		SquareMatrix<T, N> result(0);
+
+		for (unsigned i = 0; i < N; ++i)
+		{
+			auto vec = *it;
+
+			for (unsigned j = 0; j < N; ++j)
+				result.data[j][i] = vec(j);
+
+			it++;
+		}
 
 		return result;
 	}
