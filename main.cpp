@@ -30,20 +30,10 @@ void show(const SquareMatrix<T, N> & mat)
 
 int main()
 {
+	cout << "Run tests:\n";
 	testVector();
 	testSquareMatrix();
 	testDeterminant();
-
-	DoubleVector3D v = { 3.0, 3.0, 7.0 };
-	v.normalize();
-	cout << v.length();
-	cout << "\n";
-	v.y() = 5;
-	show(v);
-
-	// double w = v.w();
-
-	// SquareMatrix<int, 0> m(9);
 
 	getchar();
 	return 0;

@@ -263,6 +263,18 @@ namespace lmel
 			return *this;
 		}
 
+		// Vector product:
+		Vector<T, N> operator*(const Vector<T, N> & vec) const
+		{
+			Vector<T, N> result(0);
+
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result(i) += data[i][j] * vec(j);
+
+			return result;
+		}
+
 		// Compare operations:
 
 		bool operator==(const SquareMatrix<T, N> & m) const
@@ -478,6 +490,12 @@ namespace lmel
 		{
 			data /= val;
 			return *this;
+		}
+
+		// Vector product:
+		Vector<T, 1> operator*(const Vector<T, 1> & vec) const
+		{
+			return Vector<T, 1>(data * vec(0));
 		}
 
 		// Compare operations:

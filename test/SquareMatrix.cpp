@@ -147,6 +147,21 @@ void testSquareMatrix()
 		test(z3 == z4);
 	}
 
+	// Vector product
+	{
+		IntMatrix3D m =
+		{
+			1, 2, 2,
+			2, 2, 4,
+			1, 1, 4
+		};
+
+		IntVector3D v = { 1, 2, 3 };
+		test(m * v == IntVector3D{ 11, 18, 15 });
+
+		test(IntMatrix1D(6) * IntVector1D(6) == IntVector1D(36));
+	}
+
 	// Compare operations
 	{
 		IntMatrix2D m1(12);
