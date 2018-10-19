@@ -35,6 +35,9 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
+	show(createIdentityMatrix<int, 1>());
+	show(createIdentityMatrix<double, 5>() * 0.5);
+
 	getchar();
 	return 0;
 }

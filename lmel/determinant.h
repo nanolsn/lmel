@@ -24,6 +24,6 @@ namespace lmel
 	template <typename T>
 	inline T determinant(const SquareMatrix<T, 1> & m)
 	{
-		return m.data;
+		return m.data[0][0];
 	}
 }

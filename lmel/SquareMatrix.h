@@ -350,6 +350,9 @@ namespace lmel
 
 		template <typename T>
 		friend T determinant(const SquareMatrix<T, 2> & m);
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createIdentityMatrix();
 	};
 
 	// 1x1 matrix specialization
@@ -357,7 +360,7 @@ namespace lmel
 	class SquareMatrix<T, 1>
 	{
 	private:
-		T data;
+		T data[1][1];
 
 	public:
 		static const unsigned rows = 1;
@@ -366,7 +369,7 @@ namespace lmel
 		// Constructor with init value
 		explicit SquareMatrix(T init)
 		{
-			data = init;
+			data[0][0] = init;
 		}
 
 		// Initializer list constructor
@@ -375,13 +378,13 @@ namespace lmel
 			assert(il.size() == 1);
 
 			auto it = il.begin();
-			data = *it;
+			data[0][0] = *it;
 		}
 
 		// Copy constructor
 		SquareMatrix(const SquareMatrix<T, 1> & ref)
 		{
-			data = ref.data;
+			data[0][0] = ref.data[0][0];
 		}
 
 		// Assignment operator
@@ -390,7 +393,7 @@ namespace lmel
 			if (&val == this)
 				return *this;
 
-			data = val.data;
+			data[0][0] = val.data[0][0];
 			return *this;
 		}
 
@@ -398,116 +401,116 @@ namespace lmel
 		{
 			assert(row == 0);
 
-			return Vector<T, 1>(data);
+			return Vector<T, 1>(data[0][0]);
 		}
 
 		Vector<T, 1> getCol(const unsigned col) const
 		{
 			assert(col == 0);
 
-			return Vector<T, 1>(data);
+			return Vector<T, 1>(data[0][0]);
 		}
 
 		Vector<T, 1> getDiagonal() const
 		{
-			return Vector<T, 1>(data);
+			return Vector<T, 1>(data[0][0]);
 		}
 
 		// Default math operations:
 
 		SquareMatrix<T, 1> operator+(const SquareMatrix<T, 1> & val) const
 		{
-			return SquareMatrix<T, 1>(data + val.data);
+			return SquareMatrix<T, 1>(data[0][0] + val.data[0][0]);
 		}
 
 		SquareMatrix<T, 1> operator-(const SquareMatrix<T, 1> & val) const
 		{
-			return SquareMatrix<T, 1>(data - val.data);
+			return SquareMatrix<T, 1>(data[0][0] - val.data[0][0]);
 		}
 
 		SquareMatrix<T, 1> operator*(const SquareMatrix<T, 1> & val) const
 		{
-			return SquareMatrix<T, 1>(data * val.data);
+			return SquareMatrix<T, 1>(data[0][0] * val.data[0][0]);
 		}
 
 		SquareMatrix<T, 1> & operator+=(const SquareMatrix<T, 1> & val)
 		{
-			data += val.data;
+			data[0][0] += val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix<T, 1> & operator-=(const SquareMatrix<T, 1> & val)
 		{
-			data -= val.data;
+			data[0][0] -= val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix<T, 1> & operator*=(const SquareMatrix<T, 1> & val)
 		{
-			data *= val.data;
+			data[0][0] *= val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix<T, 1> operator+(T val) const
 		{
-			return SquareMatrix<T, 1>(data + val);
+			return SquareMatrix<T, 1>(data[0][0] + val);
 		}
 
 		SquareMatrix<T, 1> operator-(T val) const
 		{
-			return SquareMatrix<T, 1>(data - val);
+			return SquareMatrix<T, 1>(data[0][0] - val);
 		}
 
 		SquareMatrix<T, 1> operator*(T val) const
 		{
-			return SquareMatrix<T, 1>(data * val);
+			return SquareMatrix<T, 1>(data[0][0] * val);
 		}
 
 		SquareMatrix<T, 1> operator/(T val) const
 		{
-			return SquareMatrix<T, 1>(data / val);
+			return SquareMatrix<T, 1>(data[0][0] / val);
 		}
 
 		SquareMatrix<T, 1> & operator+=(T val)
 		{
-			data += val;
+			data[0][0] += val;
 			return *this;
 		}
 
 		SquareMatrix<T, 1> & operator-=(T val)
 		{
-			data -= val;
+			data[0][0] -= val;
 			return *this;
 		}
 
 		SquareMatrix<T, 1> & operator*=(T val)
 		{
-			data *= val;
+			data[0][0] *= val;
 			return *this;
 		}
 
 		SquareMatrix<T, 1> & operator/=(T val)
 		{
-			data /= val;
+			data[0][0] /= val;
 			return *this;
 		}
 
 		// Vector product:
 		Vector<T, 1> operator*(const Vector<T, 1> & vec) const
 		{
-			return Vector<T, 1>(data * vec(0));
+			return Vector<T, 1>(data[0][0] * vec(0));
 		}
 
 		// Compare operations:
 
 		bool operator==(const SquareMatrix<T, 1> & m) const
 		{
-			return data == m.data;
+			return data[0][0] == m.data[0][0];
 		}
 
 		bool operator!=(const SquareMatrix<T, 1> & m) const
 		{
-			return data != m.data;
+			return data[0][0] != m.data[0][0];
 		}
 
 		SquareMatrix<T, 1> minor(const unsigned row, const unsigned col) const
@@ -524,17 +527,20 @@ namespace lmel
 		T & operator()(const unsigned row, const unsigned col)
 		{
 			assert(row == 0 && col == 0);
-			return data;
+			return data[0][0];
 		}
 
 		const T & operator()(const unsigned row, const unsigned col) const
 		{
 			assert(row == 0 && col == 0);
-			return data;
+			return data[0][0];
 		}
 
 		template <typename T>
 		friend T determinant(const SquareMatrix<T, 1> & m);
+
+		template <typename T, unsigned N>
+		friend SquareMatrix<T, N> createIdentityMatrix();
 	};
 
 	template <typename T>
@@ -569,4 +575,15 @@ namespace lmel
 	using FloatMatrix3D = SquareMatrix<float, 3>;
 	using FloatMatrix4D = SquareMatrix<float, 4>;
 	using FloatMatrix5D = SquareMatrix<float, 5>;
+
+	template <typename T, unsigned N>
+	SquareMatrix<T, N> createIdentityMatrix()
+	{
+		SquareMatrix<T, N> result(0);
+
+		for (unsigned i = 0; i < N; ++i)
+			result.data[i][i] = 1;
+
+		return result;
+	}
 }
