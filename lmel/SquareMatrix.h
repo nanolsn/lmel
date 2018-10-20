@@ -39,24 +39,6 @@ namespace lmel
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = *it++;
 		}
-
-		// Initializer list constructor (From vectors) 
-		SquareMatrix(std::initializer_list<Vector<T, N>> il)
-		{
-			assert(il.size() == N);
-
-			auto it = il.begin();
-
-			for (unsigned i = 0; i < rows; ++i)
-			{
-				Vector<T, N> v = *it;
-
-				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = v(j);
-
-				it++;
-			}
-		}
 		
 		// Copy constructor
 		SquareMatrix(const SquareMatrix<T, N> & ref)
@@ -331,6 +313,17 @@ namespace lmel
 					data[i][j] = tmp.data[j][i];
 		}
 
+		SquareMatrix<T, N> getTranspose() const
+		{
+			SquareMatrix<T, N> result = *this;
+
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					result.data[i][j] = data[j][i];
+
+			return result;
+		}
+
 		// get/set selected element:
 
 		T & operator()(const unsigned row, const unsigned col)
@@ -528,6 +521,11 @@ namespace lmel
 
 		void transpose() {}
 
+		SquareMatrix<T, 1> getTranspose() const
+		{
+			return SquareMatrix(data[0][0]);
+		}
+
 		// get/set selected element:
 
 		T & operator()(const unsigned row, const unsigned col)
@@ -605,17 +603,16 @@ namespace lmel
 		assert(il.size() == N);
 
 		auto it = il.begin();
-
 		SquareMatrix<T, N> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 		{
-			auto vec = *it;
+			Vector<T, N> vec = *it;
 
 			for (unsigned j = 0; j < N; ++j)
 				result.data[i][j] = vec(j);
 
-			it++;
+			++it;
 		}
 
 		return result;
@@ -627,17 +624,16 @@ namespace lmel
 		assert(il.size() == N);
 
 		auto it = il.begin();
-
 		SquareMatrix<T, N> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 		{
-			auto vec = *it;
+			Vector<T, N> vec = *it;
 
 			for (unsigned j = 0; j < N; ++j)
 				result.data[j][i] = vec(j);
 
-			it++;
+			++it;
 		}
 
 		return result;

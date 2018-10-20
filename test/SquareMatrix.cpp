@@ -34,6 +34,42 @@ void testSquareMatrix()
 		DoubleMatrix4D dm7(6.0);
 		dm7 = dm4;
 		test(dm7 == dm4);
+
+		DoubleMatrix3D mc = createMatrixFromCols({
+			DoubleVector3D{ 1, 2, 3 },
+			DoubleVector3D{ 1, 2, 5 },
+			DoubleVector3D{ 8, 8, 8 }
+			});
+
+		DoubleMatrix3D mcw =
+		{
+			1, 1, 8,
+			2, 2, 8,
+			3, 5, 8
+		};
+		test(mc == mcw);
+
+		DoubleMatrix3D mr = createMatrixFromRows({
+			DoubleVector3D{ 1, 2, 3 },
+			DoubleVector3D{ 1, 2, 5 },
+			DoubleVector3D{ 8, 8, 8 }
+			});
+
+		DoubleMatrix3D mrw =
+		{
+			1, 2, 3,
+			1, 2, 5,
+			8, 8, 8
+		};
+		test(mr == mrw);
+
+		IntMatrix3D id =
+		{
+			1, 0, 0,
+			0, 1, 0,
+			0, 0, 1
+		};
+		test(id == createIdentityMatrix<int, 3>());
 	}
 
 	// Get row/col/diagonal
@@ -145,6 +181,14 @@ void testSquareMatrix()
 		};
 		z3.transpose();
 		test(z3 == z4);
+
+		IntMatrix2D z5 =
+		{
+			15, 7,
+			35, 19
+		};
+
+		test(z5.getTranspose() == z4);
 	}
 
 	// Vector product
@@ -160,6 +204,30 @@ void testSquareMatrix()
 		test(m * v == IntVector3D{ 11, 18, 15 });
 
 		test(IntMatrix1D(6) * IntVector1D(6) == IntVector1D(36));
+	}
+
+	// Operations order
+	{
+		IntMatrix3D m1 =
+		{
+			2, 5, 4,
+			-6, 2, 3,
+			7, 6, 2
+		};
+
+		IntMatrix3D m2 =
+		{
+			1, 2, 3,
+			6, 5, -4,
+			7, 2, -7
+		};
+
+		IntVector3D v1 = { 4, 2, 3 };
+		IntVector3D res = { 146, -59, -134 };
+
+		test(m2 * m1 * v1 == res);
+		test((m2 * m1) * v1 == res);
+		test(m2 * (m1 * v1) == res);
 	}
 
 	// Compare operations
