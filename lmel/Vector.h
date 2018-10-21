@@ -21,7 +21,7 @@ namespace lmel
 		static const unsigned size = N;
 
 		// Constructor with init value
-		explicit Vector(T init)
+		explicit Vector(T init = 0)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] = init;

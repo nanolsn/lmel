@@ -26,6 +26,9 @@ void testVector()
 		v6 = v4;
 		test(v4 == v6);
 		test(v5 == v6);
+
+		IntVector3D v;
+		test(v == IntVector3D{ 0, 0, 0 });
 	}
 
 	// Compare operations

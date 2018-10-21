@@ -21,7 +21,7 @@ namespace lmel
 		static const unsigned cols = N;
 
 		// Constructor with init value
-		explicit SquareMatrix(T init)
+		explicit SquareMatrix(T init = 0)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)

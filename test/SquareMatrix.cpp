@@ -70,6 +70,15 @@ void testSquareMatrix()
 			0, 0, 1
 		};
 		test(id == createIdentityMatrix<int, 3>());
+
+		IntMatrix3D m;
+		IntMatrix3D empty =
+		{
+			0, 0, 0,
+			0, 0, 0,
+			0, 0, 0
+		};
+		test(m == empty);
 	}
 
 	// Get row/col/diagonal
