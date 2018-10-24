@@ -2,6 +2,7 @@
 
 #include <initializer_list>
 #include <cassert>
+#include "Matrix.h"
 #include "Vector.h"
 
 namespace lmel
@@ -11,10 +12,10 @@ namespace lmel
 		unsigned N,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
 	>
-	class SquareMatrix
+	class SquareMatrix : public Matrix<T, N, N>
 	{
 	private:
-		T data[N][N];
+		typedef Matrix<T, N, N> Base;
 
 	public:
 		static const unsigned rows = N;
@@ -22,30 +23,20 @@ namespace lmel
 
 		// Constructor with init value
 		explicit SquareMatrix(T init = 0)
-		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = init;
-		}
+			: Base(init)
+		{}
 
 		// Initializer list constructor
 		SquareMatrix(std::initializer_list<T> il)
-		{
-			assert(il.size() == N * N);
-
-			auto it = il.begin();
-
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = *it++;
-		}
+			: Base(il)
+		{}
 		
 		// Copy constructor
 		SquareMatrix(const SquareMatrix & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = ref.data[i][j];
+					this->data[i][j] = ref.data[i][j];
 		}
 
 		// Template copy constructor (for other types)
@@ -54,44 +45,15 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = ref(i, j);
+					this->data[i][j] = ref(i, j);
 		}
 
-		// Assignment operator
-		SquareMatrix & operator=(const SquareMatrix & val)
+		// Constructor from Matrix
+		SquareMatrix(const Base & ref)
 		{
-			if (&val == this)
-				return *this;
-
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = val.data[i][j];
-
-			return *this;
-		}
-
-		Vector<T, N> getRow(const unsigned row) const
-		{
-			assert(row < rows);
-
-			Vector<T, N> result(0);
-
-			for (unsigned i = 0; i < cols; ++i)
-				result(i) = data[row][i];
-
-			return result;
-		}
-
-		Vector<T, N> getCol(const unsigned col) const
-		{
-			assert(col < cols);
-
-			Vector<T, N> result(0);
-
-			for (unsigned i = 0; i < rows; ++i)
-				result(i) = data[i][col];
-
-			return result;
+					this->data[i][j] = ref(i, j);
 		}
 
 		Vector<T, N> getDiagonal() const
@@ -99,7 +61,7 @@ namespace lmel
 			Vector<T, N> result(0);
 
 			for (unsigned i = 0; i < N; ++i)
-				result(i) = data[i][i];
+				result(i) = this->data[i][i];
 
 			return result;
 		}
@@ -112,7 +74,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] + val.data[i][j];
+					result.data[i][j] = this->data[i][j] + val.data[i][j];
 
 			return result;
 		}
@@ -123,7 +85,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] - val.data[i][j];
+					result.data[i][j] = this->data[i][j] - val.data[i][j];
 
 			return result;
 		}
@@ -135,7 +97,7 @@ namespace lmel
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					for (unsigned k = 0; k < rows; ++k)
-						result.data[i][j] += data[i][k] * val.data[k][j];
+						result.data[i][j] += this->data[i][k] * val.data[k][j];
 
 			return result;
 		}
@@ -144,7 +106,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] += val.data[i][j];
+					this->data[i][j] += val.data[i][j];
 
 			return *this;
 		}
@@ -153,7 +115,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] -= val.data[i][j];
+					this->data[i][j] -= val.data[i][j];
 
 			return *this;
 		}
@@ -165,11 +127,11 @@ namespace lmel
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					for (unsigned k = 0; k < rows; ++k)
-						result.data[i][j] += data[i][k] * val.data[k][j];
+						result.data[i][j] += this->data[i][k] * val.data[k][j];
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = result.data[i][j];
+					this->data[i][j] = result.data[i][j];
 
 			return *this;
 		}
@@ -180,7 +142,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] + val;
+					result.data[i][j] = this->data[i][j] + val;
 
 			return result;
 		}
@@ -191,7 +153,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] - val;
+					result.data[i][j] = this->data[i][j] - val;
 
 			return result;
 		}
@@ -202,7 +164,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] * val;
+					result.data[i][j] = this->data[i][j] * val;
 
 			return result;
 		}
@@ -213,7 +175,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[i][j] / val;
+					result.data[i][j] = this->data[i][j] / val;
 
 			return result;
 		}
@@ -222,7 +184,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] += val;
+					this->data[i][j] += val;
 
 			return *this;
 		}
@@ -231,7 +193,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] -= val;
+					this->data[i][j] -= val;
 
 			return *this;
 		}
@@ -240,7 +202,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] *= val;
+					this->data[i][j] *= val;
 
 			return *this;
 		}
@@ -249,7 +211,7 @@ namespace lmel
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] /= val;
+					this->data[i][j] /= val;
 
 			return *this;
 		}
@@ -261,31 +223,9 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					result(i) += data[i][j] * vec(j);
+					result(i) += this->data[i][j] * vec(j);
 
 			return result;
-		}
-
-		// Compare operations:
-
-		bool operator==(const SquareMatrix & m) const
-		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					if (data[i][j] != m.data[i][j])
-						return false;
-
-			return true;
-		}
-
-		bool operator!=(const SquareMatrix & m) const
-		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					if (data[i][j] != m.data[i][j])
-						return true;
-
-			return false;
 		}
 
 		SquareMatrix<T, N - 1> minor(const unsigned row, const unsigned col) const
@@ -304,7 +244,7 @@ namespace lmel
 					if (j == col)
 						continue;
 
-					result(x, y++) = data[i][j];
+					result(x, y++) = this->data[i][j];
 				}
 
 				++x;
@@ -319,32 +259,7 @@ namespace lmel
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
-					data[i][j] = tmp.data[j][i];
-		}
-
-		SquareMatrix getTranspose() const
-		{
-			SquareMatrix result = *this;
-
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					result.data[i][j] = data[j][i];
-
-			return result;
-		}
-
-		// get/set selected element:
-
-		T & operator()(const unsigned row, const unsigned col)
-		{
-			assert(row < rows && col < cols);
-			return data[row][col];
-		}
-
-		const T & operator()(const unsigned row, const unsigned col) const
-		{
-			assert(row < rows && col < cols);
-			return data[row][col];
+					this->data[i][j] = tmp.data[j][i];
 		}
 
 		template <typename T, unsigned N>
@@ -357,175 +272,140 @@ namespace lmel
 		friend SquareMatrix<T, N> createIdentityMatrix();
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+		friend SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il);
+		friend SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il);
 	};
 
 	// 1x1 matrix specialization
 	template <typename T>
-	class SquareMatrix<T, 1>
+	class SquareMatrix<T, 1> : public Matrix<T, 1, 1>
 	{
 	private:
-		T data[1][1];
+		typedef Matrix<T, 1, 1> Base;
 
 	public:
 		static const unsigned rows = 1;
 		static const unsigned cols = 1;
 
 		// Constructor with init value
-		explicit SquareMatrix(T init)
-		{
-			data[0][0] = init;
-		}
+		explicit SquareMatrix(T init = 0)
+			: Base(init)
+		{}
 
 		// Initializer list constructor
 		SquareMatrix(std::initializer_list<T> il)
-		{
-			assert(il.size() == 1);
-
-			auto it = il.begin();
-			data[0][0] = *it;
-		}
+			: Base(il)
+		{}
 
 		// Copy constructor
 		SquareMatrix(const SquareMatrix & ref)
 		{
-			data[0][0] = ref.data[0][0];
+			this->data[0][0] = ref.data[0][0];
 		}
 
 		// Template copy constructor (for other types)
 		template <typename O>
 		SquareMatrix(const SquareMatrix<O, 1> & ref)
 		{
-			data[0][0] = ref(0, 0);
+			this->data[0][0] = ref(0, 0);
 		}
 
-		// Assignment operator
-		SquareMatrix & operator=(const SquareMatrix & val)
+		// Constructor from Matrix
+		SquareMatrix(const Base & ref)
 		{
-			if (&val == this)
-				return *this;
-
-			data[0][0] = val.data[0][0];
-			return *this;
-		}
-
-		Vector<T, 1> getRow(const unsigned row) const
-		{
-			assert(row == 0);
-
-			return Vector<T, 1>(data[0][0]);
-		}
-
-		Vector<T, 1> getCol(const unsigned col) const
-		{
-			assert(col == 0);
-
-			return Vector<T, 1>(data[0][0]);
+			this->data[0][0] = ref(0, 0);
 		}
 
 		Vector<T, 1> getDiagonal() const
 		{
-			return Vector<T, 1>(data[0][0]);
+			return Vector<T, 1>(this->data[0][0]);
 		}
 
 		// Default math operations:
 
 		SquareMatrix operator+(const SquareMatrix & val) const
 		{
-			return SquareMatrix(data[0][0] + val.data[0][0]);
+			return SquareMatrix(this->data[0][0] + val.data[0][0]);
 		}
 
 		SquareMatrix operator-(const SquareMatrix & val) const
 		{
-			return SquareMatrix(data[0][0] - val.data[0][0]);
+			return SquareMatrix(this->data[0][0] - val.data[0][0]);
 		}
 
 		SquareMatrix operator*(const SquareMatrix & val) const
 		{
-			return SquareMatrix(data[0][0] * val.data[0][0]);
+			return SquareMatrix(this->data[0][0] * val.data[0][0]);
 		}
 
 		SquareMatrix & operator+=(const SquareMatrix & val)
 		{
-			data[0][0] += val.data[0][0];
+			this->data[0][0] += val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix & operator-=(const SquareMatrix & val)
 		{
-			data[0][0] -= val.data[0][0];
+			this->data[0][0] -= val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix & operator*=(const SquareMatrix & val)
 		{
-			data[0][0] *= val.data[0][0];
+			this->data[0][0] *= val.data[0][0];
 			return *this;
 		}
 
 		SquareMatrix operator+(T val) const
 		{
-			return SquareMatrix(data[0][0] + val);
+			return SquareMatrix(this->data[0][0] + val);
 		}
 
 		SquareMatrix operator-(T val) const
 		{
-			return SquareMatrix(data[0][0] - val);
+			return SquareMatrix(this->data[0][0] - val);
 		}
 
 		SquareMatrix operator*(T val) const
 		{
-			return SquareMatrix(data[0][0] * val);
+			return SquareMatrix(this->data[0][0] * val);
 		}
 
 		SquareMatrix operator/(T val) const
 		{
-			return SquareMatrix(data[0][0] / val);
+			return SquareMatrix(this->data[0][0] / val);
 		}
 
 		SquareMatrix & operator+=(T val)
 		{
-			data[0][0] += val;
+			this->data[0][0] += val;
 			return *this;
 		}
 
 		SquareMatrix & operator-=(T val)
 		{
-			data[0][0] -= val;
+			this->data[0][0] -= val;
 			return *this;
 		}
 
 		SquareMatrix & operator*=(T val)
 		{
-			data[0][0] *= val;
+			this->data[0][0] *= val;
 			return *this;
 		}
 
 		SquareMatrix & operator/=(T val)
 		{
-			data[0][0] /= val;
+			this->data[0][0] /= val;
 			return *this;
 		}
 
 		// Vector product:
 		Vector<T, 1> operator*(const Vector<T, 1> & vec) const
 		{
-			return Vector<T, 1>(data[0][0] * vec(0));
-		}
-
-		// Compare operations:
-
-		bool operator==(const SquareMatrix & m) const
-		{
-			return data[0][0] == m.data[0][0];
-		}
-
-		bool operator!=(const SquareMatrix & m) const
-		{
-			return data[0][0] != m.data[0][0];
+			return Vector<T, 1>(this->data[0][0] * vec(0));
 		}
 
 		SquareMatrix minor(const unsigned row, const unsigned col) const
@@ -537,25 +417,6 @@ namespace lmel
 
 		void transpose() {}
 
-		SquareMatrix getTranspose() const
-		{
-			return SquareMatrix(data[0][0]);
-		}
-
-		// get/set selected element:
-
-		T & operator()(const unsigned row, const unsigned col)
-		{
-			assert(row == 0 && col == 0);
-			return data[0][0];
-		}
-
-		const T & operator()(const unsigned row, const unsigned col) const
-		{
-			assert(row == 0 && col == 0);
-			return data[0][0];
-		}
-
 		template <typename T>
 		friend T determinant(const SquareMatrix<T, 1> & m);
 
@@ -563,10 +424,10 @@ namespace lmel
 		friend SquareMatrix<T, N> createIdentityMatrix();
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+		friend SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il);
+		friend SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il);
 	};
 
 	template <typename T>
@@ -614,7 +475,7 @@ namespace lmel
 	}
 
 	template <typename T, unsigned N>
-	SquareMatrix<T, N> createMatrixFromRows(std::initializer_list<Vector<T, N>> il)
+	SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il)
 	{
 		assert(il.size() == N);
 
@@ -635,7 +496,7 @@ namespace lmel
 	}
 
 	template <typename T, unsigned N>
-	SquareMatrix<T, N> createMatrixFromCols(std::initializer_list<Vector<T, N>> il)
+	SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il)
 	{
 		assert(il.size() == N);
 

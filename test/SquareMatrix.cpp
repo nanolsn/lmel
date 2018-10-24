@@ -35,7 +35,7 @@ void testSquareMatrix()
 		dm7 = dm4;
 		test(dm7 == dm4);
 
-		DoubleMatrix3D mc = createMatrixFromCols({
+		DoubleMatrix3D mc = squareMatrixFromCols({
 			DoubleVector3D{ 1, 2, 3 },
 			DoubleVector3D{ 1, 2, 5 },
 			DoubleVector3D{ 8, 8, 8 }
@@ -49,7 +49,7 @@ void testSquareMatrix()
 		};
 		test(mc == mcw);
 
-		DoubleMatrix3D mr = createMatrixFromRows({
+		DoubleMatrix3D mr = squareMatrixFromRows({
 			DoubleVector3D{ 1, 2, 3 },
 			DoubleVector3D{ 1, 2, 5 },
 			DoubleVector3D{ 8, 8, 8 }
@@ -87,6 +87,16 @@ void testSquareMatrix()
 		IntMatrix1D mi1(5);
 		DoubleMatrix1D md1 = mi1;
 		test(md1 == mi1);
+
+		IntMatrix<3, 3> m33(9);
+		IntMatrix3D m3d = m33;
+		IntMatrix3D m3d2(9);
+		test(m3d == m3d2);
+
+		IntMatrix1D m1d(22);
+		IntMatrix1D m1d2(8);
+		m1d = m1d2;
+		test(m1d == m1d2);
 	}
 
 	// Get row/col/diagonal

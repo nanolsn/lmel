@@ -1,4 +1,5 @@
 #include <iostream>
+#include "lmel/Matrix.h"
 #include "lmel/SquareMatrix.h"
 #include "lmel/Vector.h"
 
@@ -24,7 +25,20 @@ void show(const SquareMatrix<T, N> & mat)
 	}
 }
 
+template <typename T, unsigned N, unsigned M>
+void show(const Matrix<T, N, M> & mat)
+{
+	for (unsigned i = 0; i < mat.rows; ++i)
+	{
+		for (unsigned j = 0; j < mat.cols; ++j)
+			cout << mat(i, j) << " ";
+
+		cout << "\n";
+	}
+}
+
 #include "test/Vector.cpp"
+#include "test/Matrix.cpp"
 #include "test/SquareMatrix.cpp"
 #include "test/determinant.cpp"
 
@@ -32,6 +46,7 @@ int main()
 {
 	cout << "Run tests:\n";
 	testVector();
+	testMatrix();
 	testSquareMatrix();
 	testDeterminant();
 
