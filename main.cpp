@@ -50,6 +50,15 @@ int main()
 	testSquareMatrix();
 	testDeterminant();
 
+	Matrix<int, 2, 3> m =
+	{
+		1, 2, 3,
+		4, 5, 6
+	};
+
+	m.swapCols(0, 2);
+	show(m);
+
 	getchar();
 	return 0;
 }

@@ -95,6 +95,36 @@ namespace lmel
 			return result;
 		}
 
+		void setRow(unsigned rowNum, const Vector<T, M> & row)
+		{
+			assert(rowNum < rows);
+
+			for (unsigned j = 0; j < cols; ++j)
+				data[rowNum][j] = row(j);
+		}
+
+		void setCol(unsigned colNum, const Vector<T, N> & col)
+		{
+			assert(colNum < cols);
+
+			for (unsigned i = 0; i < rows; ++i)
+				data[i][colNum] = col(i);
+		}
+
+		void swapRows(unsigned a, unsigned b)
+		{
+			Vector<T, M> tmp = getRow(a);
+			setRow(a, getRow(b));
+			setRow(b, tmp);
+		}
+
+		void swapCols(unsigned a, unsigned b)
+		{
+			Vector<T, N> tmp = getCol(a);
+			setCol(a, getCol(b));
+			setCol(b, tmp);
+		}
+
 		// Default math operations:
 
 		Matrix operator+(const Matrix & val) const
@@ -277,13 +307,13 @@ namespace lmel
 
 		// get/set selected element:
 
-		T & operator()(const unsigned row, const unsigned col)
+		T & operator()(unsigned row, unsigned col)
 		{
 			assert(row < rows && col < cols);
 			return data[row][col];
 		}
 
-		const T & operator()(const unsigned row, const unsigned col) const
+		const T & operator()(unsigned row, unsigned col) const
 		{
 			assert(row < rows && col < cols);
 			return data[row][col];

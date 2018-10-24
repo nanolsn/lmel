@@ -258,13 +258,13 @@ namespace lmel
 
 		// get/set selected element:
 
-		T & operator()(const unsigned i)
+		T & operator()(unsigned i)
 		{
 			assert(i < size);
 			return data[i];
 		}
 
-		const T & operator()(const unsigned i) const
+		const T & operator()(unsigned i) const
 		{
 			assert(i < size);
 			return data[i];
