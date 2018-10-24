@@ -29,6 +29,10 @@ void testVector()
 
 		IntVector3D v;
 		test(v == IntVector3D{ 0, 0, 0 });
+
+		IntVector5D vi(5);
+		DoubleVector5D vd = vi;
+		test(vd == vi);
 	}
 
 	// Compare operations

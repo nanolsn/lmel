@@ -41,15 +41,24 @@ namespace lmel
 		}
 		
 		// Copy constructor
-		SquareMatrix(const SquareMatrix<T, N> & ref)
+		SquareMatrix(const SquareMatrix & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = ref.data[i][j];
 		}
 
+		// Template copy constructor (for other types)
+		template <typename O>
+		SquareMatrix(const SquareMatrix<O, N> & ref)
+		{
+			for (unsigned i = 0; i < rows; ++i)
+				for (unsigned j = 0; j < cols; ++j)
+					data[i][j] = ref(i, j);
+		}
+
 		// Assignment operator
-		SquareMatrix<T, N> & operator=(const SquareMatrix<T, N> & val)
+		SquareMatrix & operator=(const SquareMatrix & val)
 		{
 			if (&val == this)
 				return *this;
@@ -97,9 +106,9 @@ namespace lmel
 
 		// Default math operations:
 
-		SquareMatrix<T, N> operator+(const SquareMatrix<T, N> & val) const
+		SquareMatrix operator+(const SquareMatrix & val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -108,9 +117,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator-(const SquareMatrix<T, N> & val) const
+		SquareMatrix operator-(const SquareMatrix & val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -119,9 +128,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator*(const SquareMatrix<T, N> & val) const
+		SquareMatrix operator*(const SquareMatrix & val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -131,7 +140,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> & operator+=(const SquareMatrix<T, N> & val)
+		SquareMatrix & operator+=(const SquareMatrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -140,7 +149,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> & operator-=(const SquareMatrix<T, N> & val)
+		SquareMatrix & operator-=(const SquareMatrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -149,9 +158,9 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> & operator*=(const SquareMatrix<T, N> & val)
+		SquareMatrix & operator*=(const SquareMatrix & val)
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -165,9 +174,9 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> operator+(T val) const
+		SquareMatrix operator+(T val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -176,9 +185,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator-(T val) const
+		SquareMatrix operator-(T val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -187,9 +196,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator*(T val) const
+		SquareMatrix operator*(T val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -198,9 +207,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> operator/(T val) const
+		SquareMatrix operator/(T val) const
 		{
-			SquareMatrix<T, N> result(0);
+			SquareMatrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -209,7 +218,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N> & operator+=(T val)
+		SquareMatrix & operator+=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -218,7 +227,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> & operator-=(T val)
+		SquareMatrix & operator-=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -227,7 +236,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> & operator*=(T val)
+		SquareMatrix & operator*=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -236,7 +245,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix<T, N> & operator/=(T val)
+		SquareMatrix & operator/=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -259,7 +268,7 @@ namespace lmel
 
 		// Compare operations:
 
-		bool operator==(const SquareMatrix<T, N> & m) const
+		bool operator==(const SquareMatrix & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -269,7 +278,7 @@ namespace lmel
 			return true;
 		}
 
-		bool operator!=(const SquareMatrix<T, N> & m) const
+		bool operator!=(const SquareMatrix & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -306,16 +315,16 @@ namespace lmel
 
 		void transpose()
 		{
-			SquareMatrix<T, N> tmp = *this;
+			SquareMatrix tmp = *this;
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					data[i][j] = tmp.data[j][i];
 		}
 
-		SquareMatrix<T, N> getTranspose() const
+		SquareMatrix getTranspose() const
 		{
-			SquareMatrix<T, N> result = *this;
+			SquareMatrix result = *this;
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -381,13 +390,20 @@ namespace lmel
 		}
 
 		// Copy constructor
-		SquareMatrix(const SquareMatrix<T, 1> & ref)
+		SquareMatrix(const SquareMatrix & ref)
 		{
 			data[0][0] = ref.data[0][0];
 		}
 
+		// Template copy constructor (for other types)
+		template <typename O>
+		SquareMatrix(const SquareMatrix<O, 1> & ref)
+		{
+			data[0][0] = ref(0, 0);
+		}
+
 		// Assignment operator
-		SquareMatrix<T, 1> & operator=(const SquareMatrix<T, 1> & val)
+		SquareMatrix & operator=(const SquareMatrix & val)
 		{
 			if (&val == this)
 				return *this;
@@ -417,78 +433,78 @@ namespace lmel
 
 		// Default math operations:
 
-		SquareMatrix<T, 1> operator+(const SquareMatrix<T, 1> & val) const
+		SquareMatrix operator+(const SquareMatrix & val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] + val.data[0][0]);
+			return SquareMatrix(data[0][0] + val.data[0][0]);
 		}
 
-		SquareMatrix<T, 1> operator-(const SquareMatrix<T, 1> & val) const
+		SquareMatrix operator-(const SquareMatrix & val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] - val.data[0][0]);
+			return SquareMatrix(data[0][0] - val.data[0][0]);
 		}
 
-		SquareMatrix<T, 1> operator*(const SquareMatrix<T, 1> & val) const
+		SquareMatrix operator*(const SquareMatrix & val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] * val.data[0][0]);
+			return SquareMatrix(data[0][0] * val.data[0][0]);
 		}
 
-		SquareMatrix<T, 1> & operator+=(const SquareMatrix<T, 1> & val)
+		SquareMatrix & operator+=(const SquareMatrix & val)
 		{
 			data[0][0] += val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix<T, 1> & operator-=(const SquareMatrix<T, 1> & val)
+		SquareMatrix & operator-=(const SquareMatrix & val)
 		{
 			data[0][0] -= val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix<T, 1> & operator*=(const SquareMatrix<T, 1> & val)
+		SquareMatrix & operator*=(const SquareMatrix & val)
 		{
 			data[0][0] *= val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix<T, 1> operator+(T val) const
+		SquareMatrix operator+(T val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] + val);
+			return SquareMatrix(data[0][0] + val);
 		}
 
-		SquareMatrix<T, 1> operator-(T val) const
+		SquareMatrix operator-(T val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] - val);
+			return SquareMatrix(data[0][0] - val);
 		}
 
-		SquareMatrix<T, 1> operator*(T val) const
+		SquareMatrix operator*(T val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] * val);
+			return SquareMatrix(data[0][0] * val);
 		}
 
-		SquareMatrix<T, 1> operator/(T val) const
+		SquareMatrix operator/(T val) const
 		{
-			return SquareMatrix<T, 1>(data[0][0] / val);
+			return SquareMatrix(data[0][0] / val);
 		}
 
-		SquareMatrix<T, 1> & operator+=(T val)
+		SquareMatrix & operator+=(T val)
 		{
 			data[0][0] += val;
 			return *this;
 		}
 
-		SquareMatrix<T, 1> & operator-=(T val)
+		SquareMatrix & operator-=(T val)
 		{
 			data[0][0] -= val;
 			return *this;
 		}
 
-		SquareMatrix<T, 1> & operator*=(T val)
+		SquareMatrix & operator*=(T val)
 		{
 			data[0][0] *= val;
 			return *this;
 		}
 
-		SquareMatrix<T, 1> & operator/=(T val)
+		SquareMatrix & operator/=(T val)
 		{
 			data[0][0] /= val;
 			return *this;
@@ -502,26 +518,26 @@ namespace lmel
 
 		// Compare operations:
 
-		bool operator==(const SquareMatrix<T, 1> & m) const
+		bool operator==(const SquareMatrix & m) const
 		{
 			return data[0][0] == m.data[0][0];
 		}
 
-		bool operator!=(const SquareMatrix<T, 1> & m) const
+		bool operator!=(const SquareMatrix & m) const
 		{
 			return data[0][0] != m.data[0][0];
 		}
 
-		SquareMatrix<T, 1> minor(const unsigned row, const unsigned col) const
+		SquareMatrix minor(const unsigned row, const unsigned col) const
 		{
 			assert(!"Undefined minor matrix!");
 
-			return SquareMatrix<T, 1>(0);
+			return SquareMatrix(0);
 		}
 
 		void transpose() {}
 
-		SquareMatrix<T, 1> getTranspose() const
+		SquareMatrix getTranspose() const
 		{
 			return SquareMatrix(data[0][0]);
 		}

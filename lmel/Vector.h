@@ -39,14 +39,22 @@ namespace lmel
 		}
 
 		// Copy constructor
-		Vector(const Vector<T, N> & ref)
+		Vector(const Vector & ref)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] = ref.data[i];
 		}
 
+		// Template copy constructor (for other types)
+		template <typename O>
+		Vector(const Vector<O, N> & ref)
+		{
+			for (unsigned i = 0; i < size; ++i)
+				data[i] = ref(i);
+		}
+
 		// Assignment operator
-		Vector<T, N> & operator=(const Vector<T, N> & val)
+		Vector & operator=(const Vector & val)
 		{
 			if (&val == this)
 				return *this;
@@ -110,9 +118,9 @@ namespace lmel
 
 		// Default math operations:
 
-		Vector<T, N> operator+(const Vector<T, N> & val) const
+		Vector operator+(const Vector & val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] + val.data[i];
@@ -120,9 +128,9 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> operator-(const Vector<T, N> & val) const
+		Vector operator-(const Vector & val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] + val.data[i];
@@ -130,7 +138,7 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> operator*(const Vector<T, N> & val) const
+		Vector operator*(const Vector & val) const
 		{
 			T prod = 0;
 
@@ -140,7 +148,7 @@ namespace lmel
 			return prod;
 		}
 
-		Vector<T, N> & operator+=(const Vector<T, N> & val)
+		Vector & operator+=(const Vector & val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] += val.data[i];
@@ -148,7 +156,7 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, N> & operator-=(const Vector<T, N> & val)
+		Vector & operator-=(const Vector & val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] -= val.data[i];
@@ -156,9 +164,9 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, N> operator+(T val) const
+		Vector operator+(T val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] + val;
@@ -166,9 +174,9 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> operator-(T val) const
+		Vector operator-(T val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] - val;
@@ -176,9 +184,9 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> operator*(T val) const
+		Vector operator*(T val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] * val;
@@ -186,9 +194,9 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> operator/(T val) const
+		Vector operator/(T val) const
 		{
-			Vector<T, N> result(0);
+			Vector result(0);
 
 			for (unsigned i = 0; i < size; ++i)
 				result.data[i] = data[i] / val;
@@ -196,7 +204,7 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> & operator+=(T val)
+		Vector & operator+=(T val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] += val;
@@ -204,7 +212,7 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, N> & operator-=(T val)
+		Vector & operator-=(T val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] -= val;
@@ -212,7 +220,7 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, N> & operator*=(T val)
+		Vector & operator*=(T val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] *= val;
@@ -220,7 +228,7 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, N> & operator/=(T val)
+		Vector & operator/=(T val)
 		{
 			for (unsigned i = 0; i < size; ++i)
 				data[i] /= val;
@@ -230,7 +238,7 @@ namespace lmel
 
 		// Compare operations:
 
-		bool operator==(const Vector<T, N> & v) const
+		bool operator==(const Vector & v) const
 		{
 			for (unsigned i = 0; i < size; ++i)
 				if (data[i] != v.data[i])
@@ -239,7 +247,7 @@ namespace lmel
 			return true;
 		}
 
-		bool operator!=(const Vector<T, N> & v) const
+		bool operator!=(const Vector & v) const
 		{
 			for (unsigned i = 0; i < size; ++i)
 				if (data[i] != v.data[i])

@@ -79,6 +79,14 @@ void testSquareMatrix()
 			0, 0, 0
 		};
 		test(m == empty);
+
+		IntMatrix5D mi(5);
+		DoubleMatrix5D md = mi;
+		test(md == mi);
+
+		IntMatrix1D mi1(5);
+		DoubleMatrix1D md1 = mi1;
+		test(md1 == mi1);
 	}
 
 	// Get row/col/diagonal
