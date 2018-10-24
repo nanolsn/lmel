@@ -1,20 +1,21 @@
+
 #include <iostream>
-#include "lmel/Matrix.h"
-#include "lmel/SquareMatrix.h"
-#include "lmel/Vector.h"
+#include "lmel/matrix.h"
+#include "lmel/square_matrix.h"
+#include "lmel/vector.h"
 
 using namespace lmel;
 using namespace std;
 
 template <typename T, unsigned N>
-void show(const Vector<T, N> & vec)
+void show(const vector<T, N> & vec)
 {
 	for (unsigned i = 0; i < vec.size; ++i)
 		cout << vec(i) << " ";
 }
 
 template <typename T, unsigned N>
-void show(const SquareMatrix<T, N> & mat)
+void show(const square_matrix<T, N> & mat)
 {
 	for (unsigned i = 0; i < mat.rows; ++i)
 	{
@@ -26,7 +27,7 @@ void show(const SquareMatrix<T, N> & mat)
 }
 
 template <typename T, unsigned N, unsigned M>
-void show(const Matrix<T, N, M> & mat)
+void show(const matrix<T, N, M> & mat)
 {
 	for (unsigned i = 0; i < mat.rows; ++i)
 	{
@@ -37,27 +38,18 @@ void show(const Matrix<T, N, M> & mat)
 	}
 }
 
-#include "test/Vector.cpp"
-#include "test/Matrix.cpp"
-#include "test/SquareMatrix.cpp"
+#include "test/vector.cpp"
+#include "test/matrix.cpp"
+#include "test/square_matrix.cpp"
 #include "test/determinant.cpp"
 
 int main()
 {
 	cout << "Run tests:\n";
-	testVector();
-	testMatrix();
-	testSquareMatrix();
-	testDeterminant();
-
-	Matrix<int, 2, 3> m =
-	{
-		1, 2, 3,
-		4, 5, 6
-	};
-
-	m.swapCols(0, 2);
-	show(m);
+	test_vector();
+	test_matrix();
+	test_square_matrix();
+	test_determinant();
 
 	getchar();
 	return 0;

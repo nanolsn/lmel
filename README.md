@@ -5,7 +5,7 @@ Line Math Engine Library
 
 ```
 // Create double 3x3 matrix with 1.0 value
-DoubleMatrix3D matrix(1.0);
+double_matrix3d matrix(1.0);
 
 // Multiply the matrix by 12
 matrix *= 12;
@@ -14,10 +14,10 @@ matrix *= 12;
 matrix(0, 0) = 42.0;
 
 // Get the first row from the matrix
-DoubleVector3D firstRow = matrix.getRow(0);
+double_vector3d first_row = matrix.get_row(0);
 
 // Get the second value from vector
-double val = firstRow(1);
+double val = first_row(1);
 
 // Get the matrix determinant
 double det = determinant(matrix);

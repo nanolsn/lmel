@@ -2,7 +2,7 @@
 
 #include <initializer_list>
 #include <cassert>
-#include "Vector.h"
+#include "vector.h"
 
 namespace lmel
 {
@@ -12,7 +12,7 @@ namespace lmel
 		unsigned M,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0 && M != 0, T>::type
 	>
-	class Matrix
+	class matrix
 	{
 	protected:
 		T data[N][M];
@@ -22,7 +22,7 @@ namespace lmel
 		static const unsigned cols = M;
 
 		// Constructor with init value
-		explicit Matrix(T init = 0)
+		explicit matrix(T init = 0)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -30,7 +30,7 @@ namespace lmel
 		}
 
 		// Initializer list constructor
-		Matrix(std::initializer_list<T> il)
+		matrix(std::initializer_list<T> il)
 		{
 			assert(il.size() == N * M);
 
@@ -42,7 +42,7 @@ namespace lmel
 		}
 
 		// Copy constructor
-		Matrix(const Matrix & ref)
+		matrix(const matrix & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -51,7 +51,7 @@ namespace lmel
 
 		// Template copy constructor (for other types)
 		template <typename O>
-		Matrix(const Matrix<O, N, M> & ref)
+		matrix(const matrix<O, N, M> & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -59,7 +59,7 @@ namespace lmel
 		}
 
 		// Assignment operator
-		Matrix & operator=(const Matrix & val)
+		matrix & operator=(const matrix & val)
 		{
 			if (&val == this)
 				return *this;
@@ -71,11 +71,11 @@ namespace lmel
 			return *this;
 		}
 
-		Vector<T, M> getRow(const unsigned row) const
+		vector<T, M> get_row(const unsigned row) const
 		{
 			assert(row < rows);
 
-			Vector<T, M> result(0);
+			vector<T, M> result(0);
 
 			for (unsigned i = 0; i < cols; ++i)
 				result(i) = data[row][i];
@@ -83,11 +83,11 @@ namespace lmel
 			return result;
 		}
 
-		Vector<T, N> getCol(const unsigned col) const
+		vector<T, N> get_col(const unsigned col) const
 		{
 			assert(col < cols);
 
-			Vector<T, N> result(0);
+			vector<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				result(i) = data[i][col];
@@ -95,41 +95,41 @@ namespace lmel
 			return result;
 		}
 
-		void setRow(unsigned rowNum, const Vector<T, M> & row)
+		void set_row(unsigned row_num, const vector<T, M> & row)
 		{
-			assert(rowNum < rows);
+			assert(row_num < rows);
 
 			for (unsigned j = 0; j < cols; ++j)
-				data[rowNum][j] = row(j);
+				data[row_num][j] = row(j);
 		}
 
-		void setCol(unsigned colNum, const Vector<T, N> & col)
+		void set_col(unsigned col_num, const vector<T, N> & col)
 		{
-			assert(colNum < cols);
+			assert(col_num < cols);
 
 			for (unsigned i = 0; i < rows; ++i)
-				data[i][colNum] = col(i);
+				data[i][col_num] = col(i);
 		}
 
-		void swapRows(unsigned a, unsigned b)
+		void swap_rows(unsigned a, unsigned b)
 		{
-			Vector<T, M> tmp = getRow(a);
-			setRow(a, getRow(b));
-			setRow(b, tmp);
+			vector<T, M> tmp = get_row(a);
+			set_row(a, get_row(b));
+			set_row(b, tmp);
 		}
 
-		void swapCols(unsigned a, unsigned b)
+		void swap_cols(unsigned a, unsigned b)
 		{
-			Vector<T, N> tmp = getCol(a);
-			setCol(a, getCol(b));
-			setCol(b, tmp);
+			vector<T, N> tmp = get_col(a);
+			set_col(a, get_col(b));
+			set_col(b, tmp);
 		}
 
 		// Default math operations:
 
-		Matrix operator+(const Matrix & val) const
+		matrix operator+(const matrix & val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -138,9 +138,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix operator-(const Matrix & val) const
+		matrix operator-(const matrix & val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -150,9 +150,9 @@ namespace lmel
 		}
 
 		template <unsigned K>
-		Matrix<T, N, K> operator*(const Matrix<T, M, K> & val) const
+		matrix<T, N, K> operator*(const matrix<T, M, K> & val) const
 		{
-			Matrix<T, N, K> result(0);
+			matrix<T, N, K> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -162,7 +162,7 @@ namespace lmel
 			return result;
 		}
 
-		Matrix & operator+=(const Matrix & val)
+		matrix & operator+=(const matrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -171,7 +171,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix & operator-=(const Matrix & val)
+		matrix & operator-=(const matrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -180,9 +180,9 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix operator+(T val) const
+		matrix operator+(T val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -191,9 +191,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix operator-(T val) const
+		matrix operator-(T val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -202,9 +202,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix operator*(T val) const
+		matrix operator*(T val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -213,9 +213,9 @@ namespace lmel
 			return result;
 		}
 
-		Matrix operator/(T val) const
+		matrix operator/(T val) const
 		{
-			Matrix result(0);
+			matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -224,7 +224,7 @@ namespace lmel
 			return result;
 		}
 
-		Matrix & operator+=(T val)
+		matrix & operator+=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -233,7 +233,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix & operator-=(T val)
+		matrix & operator-=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -242,7 +242,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix & operator*=(T val)
+		matrix & operator*=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -251,7 +251,7 @@ namespace lmel
 			return *this;
 		}
 
-		Matrix & operator/=(T val)
+		matrix & operator/=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -260,10 +260,10 @@ namespace lmel
 			return *this;
 		}
 
-		// Vector product:
-		Vector<T, N> operator*(const Vector<T, M> & vec) const
+		// vector product:
+		vector<T, N> operator*(const vector<T, M> & vec) const
 		{
-			Vector<T, N> result(0);
+			vector<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -274,7 +274,7 @@ namespace lmel
 
 		// Compare operations:
 
-		bool operator==(const Matrix & m) const
+		bool operator==(const matrix & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -284,7 +284,7 @@ namespace lmel
 			return true;
 		}
 
-		bool operator!=(const Matrix & m) const
+		bool operator!=(const matrix & m) const
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -294,9 +294,9 @@ namespace lmel
 			return false;
 		}
 
-		Matrix<T, M, N> getTranspose() const
+		matrix<T, M, N> get_transpose() const
 		{
-			Matrix<T, M, N> result(0);
+			matrix<T, M, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -320,32 +320,35 @@ namespace lmel
 		}
 
 		template <typename T, unsigned N, unsigned M>
-		friend Matrix<T, N, M> matrixFromRows(std::initializer_list<Vector<T, M>> il);
+		friend matrix<T, N, M> make_matrix_from_rows(std::initializer_list<vector<T, M>> il);
 
 		template <typename T, unsigned N, unsigned M>
-		friend Matrix<T, N, M> matrixFromCols(std::initializer_list<Vector<T, N>> il);
+		friend matrix<T, N, M> make_matrix_from_cols(std::initializer_list<vector<T, N>> il);
 	};
 
 	template <unsigned N, unsigned M>
-	using IntMatrix = Matrix<int, N, M>;
+	using int_matrix = matrix<int, N, M>;
 
 	template <unsigned N, unsigned M>
-	using FloatMatrix = Matrix<float, N, M>;
+	using char_matrix = matrix<char, N, M>;
 
 	template <unsigned N, unsigned M>
-	using DoubleMatrix = Matrix<double, N, M>;
+	using float_matrix = matrix<float, N, M>;
+
+	template <unsigned N, unsigned M>
+	using double_matrix = matrix<double, N, M>;
 
 	template <typename T, unsigned N, unsigned M>
-	Matrix<T, N, M> matrixFromRows(std::initializer_list<Vector<T, M>> il)
+	matrix<T, N, M> make_matrix_from_rows(std::initializer_list<vector<T, M>> il)
 	{
 		assert(il.size() == N);
 
 		auto it = il.begin();
-		Matrix<T, N, M> result(0);
+		matrix<T, N, M> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 		{
-			Vector<T, M> vec = *it;
+			vector<T, M> vec = *it;
 
 			for (unsigned j = 0; j < M; ++j)
 				result.data[i][j] = vec(j);
@@ -357,16 +360,16 @@ namespace lmel
 	}
 
 	template <typename T, unsigned N, unsigned M>
-	Matrix<T, N, M> matrixFromCols(std::initializer_list<Vector<T, N>> il)
+	matrix<T, N, M> make_matrix_from_cols(std::initializer_list<vector<T, N>> il)
 	{
 		assert(il.size() == M);
 
 		auto it = il.begin();
-		Matrix<T, N, M> result(0);
+		matrix<T, N, M> result(0);
 
 		for (unsigned i = 0; i < M; ++i)
 		{
-			Vector<T, N> vec = *it;
+			vector<T, N> vec = *it;
 
 			for (unsigned j = 0; j < N; ++j)
 				result.data[j][i] = vec(j);

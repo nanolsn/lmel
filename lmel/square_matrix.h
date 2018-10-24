@@ -2,8 +2,8 @@
 
 #include <initializer_list>
 #include <cassert>
-#include "Matrix.h"
-#include "Vector.h"
+#include "matrix.h"
+#include "vector.h"
 
 namespace lmel
 {
@@ -12,27 +12,27 @@ namespace lmel
 		unsigned N,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
 	>
-	class SquareMatrix : public Matrix<T, N, N>
+	class square_matrix : public matrix<T, N, N>
 	{
 	private:
-		typedef Matrix<T, N, N> Base;
+		typedef matrix<T, N, N> base;
 
 	public:
 		static const unsigned rows = N;
 		static const unsigned cols = N;
 
 		// Constructor with init value
-		explicit SquareMatrix(T init = 0)
-			: Base(init)
+		explicit square_matrix(T init = 0)
+			: base(init)
 		{}
 
 		// Initializer list constructor
-		SquareMatrix(std::initializer_list<T> il)
-			: Base(il)
+		square_matrix(std::initializer_list<T> il)
+			: base(il)
 		{}
 		
 		// Copy constructor
-		SquareMatrix(const SquareMatrix & ref)
+		square_matrix(const square_matrix & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -41,24 +41,24 @@ namespace lmel
 
 		// Template copy constructor (for other types)
 		template <typename O>
-		SquareMatrix(const SquareMatrix<O, N> & ref)
+		square_matrix(const square_matrix<O, N> & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					this->data[i][j] = ref(i, j);
 		}
 
-		// Constructor from Matrix
-		SquareMatrix(const Base & ref)
+		// Constructor from matrix
+		square_matrix(const base & ref)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
 					this->data[i][j] = ref(i, j);
 		}
 
-		Vector<T, N> getDiagonal() const
+		vector<T, N> get_diagonal() const
 		{
-			Vector<T, N> result(0);
+			vector<T, N> result(0);
 
 			for (unsigned i = 0; i < N; ++i)
 				result(i) = this->data[i][i];
@@ -68,9 +68,9 @@ namespace lmel
 
 		// Default math operations:
 
-		SquareMatrix operator+(const SquareMatrix & val) const
+		square_matrix operator+(const square_matrix & val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -79,9 +79,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix operator-(const SquareMatrix & val) const
+		square_matrix operator-(const square_matrix & val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -90,9 +90,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix operator*(const SquareMatrix & val) const
+		square_matrix operator*(const square_matrix & val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -102,7 +102,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix & operator+=(const SquareMatrix & val)
+		square_matrix & operator+=(const square_matrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -111,7 +111,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix & operator-=(const SquareMatrix & val)
+		square_matrix & operator-=(const square_matrix & val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -120,9 +120,9 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix & operator*=(const SquareMatrix & val)
+		square_matrix & operator*=(const square_matrix & val)
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -136,9 +136,9 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix operator+(T val) const
+		square_matrix operator+(T val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -147,9 +147,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix operator-(T val) const
+		square_matrix operator-(T val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -158,9 +158,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix operator*(T val) const
+		square_matrix operator*(T val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -169,9 +169,9 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix operator/(T val) const
+		square_matrix operator/(T val) const
 		{
-			SquareMatrix result(0);
+			square_matrix result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -180,7 +180,7 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix & operator+=(T val)
+		square_matrix & operator+=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -189,7 +189,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix & operator-=(T val)
+		square_matrix & operator-=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -198,7 +198,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix & operator*=(T val)
+		square_matrix & operator*=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -207,7 +207,7 @@ namespace lmel
 			return *this;
 		}
 
-		SquareMatrix & operator/=(T val)
+		square_matrix & operator/=(T val)
 		{
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -216,10 +216,10 @@ namespace lmel
 			return *this;
 		}
 
-		// Vector product:
-		Vector<T, N> operator*(const Vector<T, N> & vec) const
+		// vector product:
+		vector<T, N> operator*(const vector<T, N> & vec) const
 		{
-			Vector<T, N> result(0);
+			vector<T, N> result(0);
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -228,11 +228,11 @@ namespace lmel
 			return result;
 		}
 
-		SquareMatrix<T, N - 1> minor(const unsigned row, const unsigned col) const
+		square_matrix<T, N - 1> minor(const unsigned row, const unsigned col) const
 		{
 			assert(row < rows && col < cols);
 
-			SquareMatrix<T, N - 1> result(0);
+			square_matrix<T, N - 1> result(0);
 
 			for (unsigned i = 0, x = 0; i < rows; ++i)
 			{
@@ -255,7 +255,7 @@ namespace lmel
 
 		void transpose()
 		{
-			SquareMatrix tmp = *this;
+			square_matrix tmp = *this;
 
 			for (unsigned i = 0; i < rows; ++i)
 				for (unsigned j = 0; j < cols; ++j)
@@ -263,210 +263,216 @@ namespace lmel
 		}
 
 		template <typename T, unsigned N>
-		friend T determinant(const SquareMatrix<T, N> & m);
+		friend T determinant(const square_matrix<T, N> & m);
 
 		template <typename T>
-		friend T determinant(const SquareMatrix<T, 2> & m);
+		friend T determinant(const square_matrix<T, 2> & m);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createIdentityMatrix();
+		friend square_matrix<T, N> make_id_matrix();
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+		friend square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il);
+		friend square_matrix<T, N> make_square_matrix_from_cols(std::initializer_list<vector<T, N>> il);
 	};
 
 	// 1x1 matrix specialization
 	template <typename T>
-	class SquareMatrix<T, 1> : public Matrix<T, 1, 1>
+	class square_matrix<T, 1> : public matrix<T, 1, 1>
 	{
 	private:
-		typedef Matrix<T, 1, 1> Base;
+		typedef matrix<T, 1, 1> base;
 
 	public:
 		static const unsigned rows = 1;
 		static const unsigned cols = 1;
 
 		// Constructor with init value
-		explicit SquareMatrix(T init = 0)
-			: Base(init)
+		explicit square_matrix(T init = 0)
+			: base(init)
 		{}
 
 		// Initializer list constructor
-		SquareMatrix(std::initializer_list<T> il)
-			: Base(il)
+		square_matrix(std::initializer_list<T> il)
+			: base(il)
 		{}
 
 		// Copy constructor
-		SquareMatrix(const SquareMatrix & ref)
+		square_matrix(const square_matrix & ref)
 		{
 			this->data[0][0] = ref.data[0][0];
 		}
 
 		// Template copy constructor (for other types)
 		template <typename O>
-		SquareMatrix(const SquareMatrix<O, 1> & ref)
+		square_matrix(const square_matrix<O, 1> & ref)
 		{
 			this->data[0][0] = ref(0, 0);
 		}
 
-		// Constructor from Matrix
-		SquareMatrix(const Base & ref)
+		// Constructor from matrix
+		square_matrix(const base & ref)
 		{
 			this->data[0][0] = ref(0, 0);
 		}
 
-		Vector<T, 1> getDiagonal() const
+		vector<T, 1> get_diagonal() const
 		{
-			return Vector<T, 1>(this->data[0][0]);
+			return vector<T, 1>(this->data[0][0]);
 		}
 
 		// Default math operations:
 
-		SquareMatrix operator+(const SquareMatrix & val) const
+		square_matrix operator+(const square_matrix & val) const
 		{
-			return SquareMatrix(this->data[0][0] + val.data[0][0]);
+			return square_matrix(this->data[0][0] + val.data[0][0]);
 		}
 
-		SquareMatrix operator-(const SquareMatrix & val) const
+		square_matrix operator-(const square_matrix & val) const
 		{
-			return SquareMatrix(this->data[0][0] - val.data[0][0]);
+			return square_matrix(this->data[0][0] - val.data[0][0]);
 		}
 
-		SquareMatrix operator*(const SquareMatrix & val) const
+		square_matrix operator*(const square_matrix & val) const
 		{
-			return SquareMatrix(this->data[0][0] * val.data[0][0]);
+			return square_matrix(this->data[0][0] * val.data[0][0]);
 		}
 
-		SquareMatrix & operator+=(const SquareMatrix & val)
+		square_matrix & operator+=(const square_matrix & val)
 		{
 			this->data[0][0] += val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix & operator-=(const SquareMatrix & val)
+		square_matrix & operator-=(const square_matrix & val)
 		{
 			this->data[0][0] -= val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix & operator*=(const SquareMatrix & val)
+		square_matrix & operator*=(const square_matrix & val)
 		{
 			this->data[0][0] *= val.data[0][0];
 			return *this;
 		}
 
-		SquareMatrix operator+(T val) const
+		square_matrix operator+(T val) const
 		{
-			return SquareMatrix(this->data[0][0] + val);
+			return square_matrix(this->data[0][0] + val);
 		}
 
-		SquareMatrix operator-(T val) const
+		square_matrix operator-(T val) const
 		{
-			return SquareMatrix(this->data[0][0] - val);
+			return square_matrix(this->data[0][0] - val);
 		}
 
-		SquareMatrix operator*(T val) const
+		square_matrix operator*(T val) const
 		{
-			return SquareMatrix(this->data[0][0] * val);
+			return square_matrix(this->data[0][0] * val);
 		}
 
-		SquareMatrix operator/(T val) const
+		square_matrix operator/(T val) const
 		{
-			return SquareMatrix(this->data[0][0] / val);
+			return square_matrix(this->data[0][0] / val);
 		}
 
-		SquareMatrix & operator+=(T val)
+		square_matrix & operator+=(T val)
 		{
 			this->data[0][0] += val;
 			return *this;
 		}
 
-		SquareMatrix & operator-=(T val)
+		square_matrix & operator-=(T val)
 		{
 			this->data[0][0] -= val;
 			return *this;
 		}
 
-		SquareMatrix & operator*=(T val)
+		square_matrix & operator*=(T val)
 		{
 			this->data[0][0] *= val;
 			return *this;
 		}
 
-		SquareMatrix & operator/=(T val)
+		square_matrix & operator/=(T val)
 		{
 			this->data[0][0] /= val;
 			return *this;
 		}
 
-		// Vector product:
-		Vector<T, 1> operator*(const Vector<T, 1> & vec) const
+		// vector product:
+		vector<T, 1> operator*(const vector<T, 1> & vec) const
 		{
-			return Vector<T, 1>(this->data[0][0] * vec(0));
+			return vector<T, 1>(this->data[0][0] * vec(0));
 		}
 
-		SquareMatrix minor(const unsigned row, const unsigned col) const
+		square_matrix minor(const unsigned row, const unsigned col) const
 		{
 			assert(!"Undefined minor matrix!");
 
-			return SquareMatrix(0);
+			return square_matrix(0);
 		}
 
 		void transpose() {}
 
 		template <typename T>
-		friend T determinant(const SquareMatrix<T, 1> & m);
+		friend T determinant(const square_matrix<T, 1> & m);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> createIdentityMatrix();
+		friend square_matrix<T, N> make_id_matrix();
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il);
+		friend square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il);
 
 		template <typename T, unsigned N>
-		friend SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il);
+		friend square_matrix<T, N> make_square_matrix_from_cols(std::initializer_list<vector<T, N>> il);
 	};
 
 	template <typename T>
-	using Matrix1D = SquareMatrix<T, 1>;
+	using matrix1d = square_matrix<T, 1>;
 
 	template <typename T>
-	using Matrix2D = SquareMatrix<T, 2>;
+	using matrix2d = square_matrix<T, 2>;
 
 	template <typename T>
-	using Matrix3D = SquareMatrix<T, 3>;
+	using matrix3d = square_matrix<T, 3>;
 
 	template <typename T>
-	using Matrix4D = SquareMatrix<T, 4>;
+	using matrix4d = square_matrix<T, 4>;
 
 	template <typename T>
-	using Matrix5D = SquareMatrix<T, 5>;
+	using matrix5d = square_matrix<T, 5>;
 
-	using IntMatrix1D = SquareMatrix<int, 1>;
-	using IntMatrix2D = SquareMatrix<int, 2>;
-	using IntMatrix3D = SquareMatrix<int, 3>;
-	using IntMatrix4D = SquareMatrix<int, 4>;
-	using IntMatrix5D = SquareMatrix<int, 5>;
+	using int_matrix1d = square_matrix<int, 1>;
+	using int_matrix2d = square_matrix<int, 2>;
+	using int_matrix3d = square_matrix<int, 3>;
+	using int_matrix4d = square_matrix<int, 4>;
+	using int_matrix5d = square_matrix<int, 5>;
 
-	using DoubleMatrix1D = SquareMatrix<double, 1>;
-	using DoubleMatrix2D = SquareMatrix<double, 2>;
-	using DoubleMatrix3D = SquareMatrix<double, 3>;
-	using DoubleMatrix4D = SquareMatrix<double, 4>;
-	using DoubleMatrix5D = SquareMatrix<double, 5>;
+	using char_matrix1d = square_matrix<char, 1>;
+	using char_matrix2d = square_matrix<char, 2>;
+	using char_matrix3d = square_matrix<char, 3>;
+	using char_matrix4d = square_matrix<char, 4>;
+	using char_matrix5d = square_matrix<char, 5>;
 
-	using FloatMatrix1D = SquareMatrix<float, 1>;
-	using FloatMatrix2D = SquareMatrix<float, 2>;
-	using FloatMatrix3D = SquareMatrix<float, 3>;
-	using FloatMatrix4D = SquareMatrix<float, 4>;
-	using FloatMatrix5D = SquareMatrix<float, 5>;
+	using double_matrix1d = square_matrix<double, 1>;
+	using double_matrix2d = square_matrix<double, 2>;
+	using double_matrix3d = square_matrix<double, 3>;
+	using double_matrix4d = square_matrix<double, 4>;
+	using double_matrix5d = square_matrix<double, 5>;
+
+	using float_matrix1d = square_matrix<float, 1>;
+	using float_matrix2d = square_matrix<float, 2>;
+	using float_matrix3d = square_matrix<float, 3>;
+	using float_matrix4d = square_matrix<float, 4>;
+	using float_matrix5d = square_matrix<float, 5>;
 
 	template <typename T, unsigned N>
-	SquareMatrix<T, N> createIdentityMatrix()
+	square_matrix<T, N> make_id_matrix()
 	{
-		SquareMatrix<T, N> result(0);
+		square_matrix<T, N> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 			result.data[i][i] = 1;
@@ -475,16 +481,16 @@ namespace lmel
 	}
 
 	template <typename T, unsigned N>
-	SquareMatrix<T, N> squareMatrixFromRows(std::initializer_list<Vector<T, N>> il)
+	square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il)
 	{
 		assert(il.size() == N);
 
 		auto it = il.begin();
-		SquareMatrix<T, N> result(0);
+		square_matrix<T, N> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 		{
-			Vector<T, N> vec = *it;
+			vector<T, N> vec = *it;
 
 			for (unsigned j = 0; j < N; ++j)
 				result.data[i][j] = vec(j);
@@ -496,16 +502,16 @@ namespace lmel
 	}
 
 	template <typename T, unsigned N>
-	SquareMatrix<T, N> squareMatrixFromCols(std::initializer_list<Vector<T, N>> il)
+	square_matrix<T, N> make_square_matrix_from_cols(std::initializer_list<vector<T, N>> il)
 	{
 		assert(il.size() == N);
 
 		auto it = il.begin();
-		SquareMatrix<T, N> result(0);
+		square_matrix<T, N> result(0);
 
 		for (unsigned i = 0; i < N; ++i)
 		{
-			Vector<T, N> vec = *it;
+			vector<T, N> vec = *it;
 
 			for (unsigned j = 0; j < N; ++j)
 				result.data[j][i] = vec(j);

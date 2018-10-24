@@ -1,11 +1,11 @@
 #pragma once
 
-#include "SquareMatrix.h"
+#include "square_matrix.h"
 
 namespace lmel
 {
 	template <typename T, unsigned N>
-	inline T determinant(const SquareMatrix<T, N> & m)
+	inline T determinant(const square_matrix<T, N> & m)
 	{
 		T det = 0;
 
@@ -16,13 +16,13 @@ namespace lmel
 	}
 
 	template <typename T>
-	inline T determinant(const SquareMatrix<T, 2> & m)
+	inline T determinant(const square_matrix<T, 2> & m)
 	{
 		return m.data[0][0] * m.data[1][1] - m.data[1][0] * m.data[0][1];
 	}
 
 	template <typename T>
-	inline T determinant(const SquareMatrix<T, 1> & m)
+	inline T determinant(const square_matrix<T, 1> & m)
 	{
 		return m.data[0][0];
 	}
