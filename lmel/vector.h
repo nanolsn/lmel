@@ -11,7 +11,7 @@ namespace lmel
 		typename T,
 		unsigned N,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
-	>
+		>
 	class vector
 	{
 	private:

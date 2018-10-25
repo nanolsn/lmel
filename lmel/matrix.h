@@ -11,7 +11,7 @@ namespace lmel
 		unsigned N,
 		unsigned M,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0 && M != 0, T>::type
-	>
+		>
 	class matrix
 	{
 	protected:
@@ -260,7 +260,7 @@ namespace lmel
 			return *this;
 		}
 
-		// vector product:
+		// Vector product:
 		vector<T, N> operator*(const vector<T, M> & vec) const
 		{
 			vector<T, N> result(0);
