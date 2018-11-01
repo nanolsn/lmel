@@ -3,7 +3,7 @@ Line Math Engine Library
 
 ## Getting Started
 
-```
+```c++
 // Create double 3x3 matrix with 1.0 value
 double_matrix3d matrix(1.0);
 
