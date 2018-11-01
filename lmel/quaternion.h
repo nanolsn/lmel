@@ -100,7 +100,7 @@ namespace lmel
 				w != m.w;
 		}
 
-		square_matrix<T, 4> get_rotation_matrix() const
+		square_matrix<T, 3> get_rotation_matrix3d() const
 		{
 			T sqx = x * x;
 			T sqy = y * y;
@@ -116,12 +116,11 @@ namespace lmel
 			T yz = y * z;
 			T xw = x * w;
 
-			return square_matrix<T, 4>
+			return square_matrix<T, 3>
 			{
-				(sqx - sqy - sqz + sqw) * i, 2 * (xy - zw) * i, 2 * (xz + yw) * i, 0,
-				2 * (xy + zw) * i, (-sqx + sqy - sqz + sqw) * i, 2 * (yz - xw) * i, 0,
-				2 * (xz - yw) * i, 2 * (yz + xw) * i, (-sqx - sqy + sqz + sqw) * i, 0,
-				0, 0, 0, 1
+				 (sqx - sqy - sqz + sqw) * i, 2 * (xy - zw) * i, 2 * (xz + yw) * i,
+				2 * (xy + zw) * i, (-sqx + sqy - sqz + sqw) * i, 2 * (yz - xw) * i,
+				2 * (xz - yw) * i, 2 * (yz + xw) * i, (-sqx - sqy + sqz + sqw) * i
 			};
 		}
 	};
@@ -150,5 +149,11 @@ namespace lmel
 			axis_z * s,
 			cos(angle / 2)
 			);
+	}
+
+	template <typename T>
+	quaternion<T> make_id_quaternion()
+	{
+		return quaternion<T>(1, 0, 0, 0);
 	}
 }

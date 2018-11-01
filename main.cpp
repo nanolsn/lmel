@@ -65,7 +65,11 @@ int main()
 
 	cout << "\n";
 
-	show(q.get_rotation_matrix());
+	show(q.get_rotation_matrix3d());
+
+	cout << "\n";
+
+	show(make_id_quaternion<double>());
 
 	getchar();
 	return 0;
