@@ -1,7 +1,7 @@
 # LMEL
 Line Math Engine Library
 
-## Getting Started
+## How to use
 
 ```c++
 // Create double 3x3 matrix with 1.0 value
