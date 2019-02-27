@@ -24,8 +24,8 @@ namespace lmel
 		// Constructor with init value
 		explicit matrix(T init = 0)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] = init;
 		}
 
@@ -36,16 +36,16 @@ namespace lmel
 
 			auto it = il.begin();
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] = *it++;
 		}
 
 		// Copy constructor
 		matrix(const matrix & ref)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] = ref.data[i][j];
 		}
 
@@ -53,8 +53,8 @@ namespace lmel
 		template <typename O>
 		matrix(const matrix<O, N, M> & ref)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] = ref(i, j);
 		}
 
@@ -64,8 +64,8 @@ namespace lmel
 			if (&val == this)
 				return *this;
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] = val.data[i][j];
 
 			return *this;
@@ -77,7 +77,7 @@ namespace lmel
 
 			vector<T, M> result(0);
 
-			for (unsigned i = 0; i < cols; ++i)
+			for (size_t i = 0; i < cols; ++i)
 				result(i) = data[row][i];
 
 			return result;
@@ -89,7 +89,7 @@ namespace lmel
 
 			vector<T, N> result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
+			for (size_t i = 0; i < rows; ++i)
 				result(i) = data[i][col];
 
 			return result;
@@ -99,7 +99,7 @@ namespace lmel
 		{
 			assert(row_num < rows);
 
-			for (unsigned j = 0; j < cols; ++j)
+			for (size_t j = 0; j < cols; ++j)
 				data[row_num][j] = row(j);
 		}
 
@@ -107,7 +107,7 @@ namespace lmel
 		{
 			assert(col_num < cols);
 
-			for (unsigned i = 0; i < rows; ++i)
+			for (size_t i = 0; i < rows; ++i)
 				data[i][col_num] = col(i);
 		}
 
@@ -131,8 +131,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] + val.data[i][j];
 
 			return result;
@@ -142,8 +142,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] - val.data[i][j];
 
 			return result;
@@ -154,9 +154,9 @@ namespace lmel
 		{
 			matrix<T, N, K> result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					for (unsigned k = 0; k < K; ++k)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
+					for (size_t k = 0; k < K; ++k)
 						result(i, k) += data[i][j] * val(j, k);
 
 			return result;
@@ -164,8 +164,8 @@ namespace lmel
 
 		matrix & operator+=(const matrix & val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] += val.data[i][j];
 
 			return *this;
@@ -173,8 +173,8 @@ namespace lmel
 
 		matrix & operator-=(const matrix & val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] -= val.data[i][j];
 
 			return *this;
@@ -184,8 +184,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] + val;
 
 			return result;
@@ -195,8 +195,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] - val;
 
 			return result;
@@ -206,8 +206,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] * val;
 
 			return result;
@@ -217,8 +217,8 @@ namespace lmel
 		{
 			matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = data[i][j] / val;
 
 			return result;
@@ -226,8 +226,8 @@ namespace lmel
 
 		matrix & operator+=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] += val;
 
 			return *this;
@@ -235,8 +235,8 @@ namespace lmel
 
 		matrix & operator-=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] -= val;
 
 			return *this;
@@ -244,8 +244,8 @@ namespace lmel
 
 		matrix & operator*=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] *= val;
 
 			return *this;
@@ -253,8 +253,8 @@ namespace lmel
 
 		matrix & operator/=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					data[i][j] /= val;
 
 			return *this;
@@ -265,8 +265,8 @@ namespace lmel
 		{
 			vector<T, N> result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result(i) += data[i][j] * vec(j);
 
 			return result;
@@ -276,8 +276,8 @@ namespace lmel
 
 		bool operator==(const matrix & m) const
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					if (data[i][j] != m.data[i][j])
 						return false;
 
@@ -286,8 +286,8 @@ namespace lmel
 
 		bool operator!=(const matrix & m) const
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					if (data[i][j] != m.data[i][j])
 						return true;
 
@@ -298,8 +298,8 @@ namespace lmel
 		{
 			matrix<T, M, N> result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result(j, i) = data[i][j];
 
 			return result;
@@ -346,11 +346,11 @@ namespace lmel
 		auto it = il.begin();
 		matrix<T, N, M> result(0);
 
-		for (unsigned i = 0; i < N; ++i)
+		for (size_t i = 0; i < N; ++i)
 		{
 			vector<T, M> vec = *it;
 
-			for (unsigned j = 0; j < M; ++j)
+			for (size_t j = 0; j < M; ++j)
 				result.data[i][j] = vec(j);
 
 			++it;
@@ -367,11 +367,11 @@ namespace lmel
 		auto it = il.begin();
 		matrix<T, N, M> result(0);
 
-		for (unsigned i = 0; i < M; ++i)
+		for (size_t i = 0; i < M; ++i)
 		{
 			vector<T, N> vec = *it;
 
-			for (unsigned j = 0; j < N; ++j)
+			for (size_t j = 0; j < N; ++j)
 				result.data[j][i] = vec(j);
 
 			++it;
