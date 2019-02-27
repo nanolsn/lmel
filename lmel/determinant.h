@@ -9,7 +9,7 @@ namespace lmel
 	{
 		T det = 0;
 
-		for (unsigned i = 0; i < N; ++i)
+		for (size_t i = 0; i < N; ++i)
 			det += (i % 2 == 0 ? 1 : -1) * m.data[0][i] * determinant(m.minor(0, i));
 
 		return det;
