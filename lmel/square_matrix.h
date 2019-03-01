@@ -34,8 +34,8 @@ namespace lmel
 		// Copy constructor
 		square_matrix(const square_matrix & ref)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] = ref.data[i][j];
 		}
 
@@ -43,16 +43,16 @@ namespace lmel
 		template <typename O>
 		square_matrix(const square_matrix<O, N> & ref)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] = ref(i, j);
 		}
 
 		// Constructor from matrix
 		square_matrix(const base & ref)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] = ref(i, j);
 		}
 
@@ -60,7 +60,7 @@ namespace lmel
 		{
 			vector<T, N> result(0);
 
-			for (unsigned i = 0; i < N; ++i)
+			for (size_t i = 0; i < N; ++i)
 				result(i) = this->data[i][i];
 
 			return result;
@@ -72,8 +72,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] + val.data[i][j];
 
 			return result;
@@ -83,8 +83,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] - val.data[i][j];
 
 			return result;
@@ -94,9 +94,9 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					for (unsigned k = 0; k < rows; ++k)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
+					for (size_t k = 0; k < rows; ++k)
 						result.data[i][j] += this->data[i][k] * val.data[k][j];
 
 			return result;
@@ -104,8 +104,8 @@ namespace lmel
 
 		square_matrix & operator+=(const square_matrix & val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] += val.data[i][j];
 
 			return *this;
@@ -113,8 +113,8 @@ namespace lmel
 
 		square_matrix & operator-=(const square_matrix & val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] -= val.data[i][j];
 
 			return *this;
@@ -124,13 +124,13 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
-					for (unsigned k = 0; k < rows; ++k)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
+					for (size_t k = 0; k < rows; ++k)
 						result.data[i][j] += this->data[i][k] * val.data[k][j];
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] = result.data[i][j];
 
 			return *this;
@@ -140,8 +140,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] + val;
 
 			return result;
@@ -151,8 +151,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] - val;
 
 			return result;
@@ -162,8 +162,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] * val;
 
 			return result;
@@ -173,8 +173,8 @@ namespace lmel
 		{
 			square_matrix result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result.data[i][j] = this->data[i][j] / val;
 
 			return result;
@@ -182,8 +182,8 @@ namespace lmel
 
 		square_matrix & operator+=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] += val;
 
 			return *this;
@@ -191,8 +191,8 @@ namespace lmel
 
 		square_matrix & operator-=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] -= val;
 
 			return *this;
@@ -200,8 +200,8 @@ namespace lmel
 
 		square_matrix & operator*=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] *= val;
 
 			return *this;
@@ -209,8 +209,8 @@ namespace lmel
 
 		square_matrix & operator/=(T val)
 		{
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] /= val;
 
 			return *this;
@@ -221,8 +221,8 @@ namespace lmel
 		{
 			vector<T, N> result(0);
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					result(i) += this->data[i][j] * vec(j);
 
 			return result;
@@ -234,12 +234,12 @@ namespace lmel
 
 			square_matrix<T, N - 1> result(0);
 
-			for (unsigned i = 0, x = 0; i < rows; ++i)
+			for (size_t i = 0, x = 0; i < rows; ++i)
 			{
 				if (i == row)
 					continue;
 
-				for (unsigned j = 0, y = 0; j < cols; ++j)
+				for (size_t j = 0, y = 0; j < cols; ++j)
 				{
 					if (j == col)
 						continue;
@@ -257,8 +257,8 @@ namespace lmel
 		{
 			square_matrix tmp = *this;
 
-			for (unsigned i = 0; i < rows; ++i)
-				for (unsigned j = 0; j < cols; ++j)
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = 0; j < cols; ++j)
 					this->data[i][j] = tmp.data[j][i];
 		}
 
@@ -474,7 +474,7 @@ namespace lmel
 	{
 		square_matrix<T, N> result(0);
 
-		for (unsigned i = 0; i < N; ++i)
+		for (size_t i = 0; i < N; ++i)
 			result.data[i][i] = 1;
 
 		return result;
@@ -488,11 +488,11 @@ namespace lmel
 		auto it = il.begin();
 		square_matrix<T, N> result(0);
 
-		for (unsigned i = 0; i < N; ++i)
+		for (size_t i = 0; i < N; ++i)
 		{
 			vector<T, N> vec = *it;
 
-			for (unsigned j = 0; j < N; ++j)
+			for (size_t j = 0; j < N; ++j)
 				result.data[i][j] = vec(j);
 
 			++it;
@@ -509,11 +509,11 @@ namespace lmel
 		auto it = il.begin();
 		square_matrix<T, N> result(0);
 
-		for (unsigned i = 0; i < N; ++i)
+		for (size_t i = 0; i < N; ++i)
 		{
 			vector<T, N> vec = *it;
 
-			for (unsigned j = 0; j < N; ++j)
+			for (size_t j = 0; j < N; ++j)
 				result.data[j][i] = vec(j);
 
 			++it;
