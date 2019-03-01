@@ -23,7 +23,7 @@ namespace lmel
 		// Constructor with init value
 		explicit vector(T init = 0)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] = init;
 		}
 
@@ -32,7 +32,7 @@ namespace lmel
 		{
 			assert(il.size() == N);
 
-			unsigned i = 0;
+			size_t i = 0;
 
 			for (T v : il)
 				data[i++] = v;
@@ -41,7 +41,7 @@ namespace lmel
 		// Copy constructor
 		vector(const vector & ref)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] = ref.data[i];
 		}
 
@@ -49,7 +49,7 @@ namespace lmel
 		template <typename O>
 		vector(const vector<O, N> & ref)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] = ref(i);
 		}
 
@@ -59,7 +59,7 @@ namespace lmel
 			if (&val == this)
 				return *this;
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] = val.data[i];
 
 			return *this;
@@ -101,7 +101,7 @@ namespace lmel
 		{
 			T sum = 0;
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				sum += data[i] * data[i];
 
 			return sqrt(sum);
@@ -112,7 +112,7 @@ namespace lmel
 		{
 			double len = length();
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] /= len;
 		}
 
@@ -122,7 +122,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] + val.data[i];
 
 			return result;
@@ -132,7 +132,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] + val.data[i];
 
 			return result;
@@ -142,7 +142,7 @@ namespace lmel
 		{
 			T prod = 0;
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				prod += data[i] * val.data[i];
 
 			return prod;
@@ -150,7 +150,7 @@ namespace lmel
 
 		vector & operator+=(const vector & val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] += val.data[i];
 
 			return *this;
@@ -158,7 +158,7 @@ namespace lmel
 
 		vector & operator-=(const vector & val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] -= val.data[i];
 
 			return *this;
@@ -168,7 +168,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] + val;
 
 			return result;
@@ -178,7 +178,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] - val;
 
 			return result;
@@ -188,7 +188,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] * val;
 
 			return result;
@@ -198,7 +198,7 @@ namespace lmel
 		{
 			vector result(0);
 
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				result.data[i] = data[i] / val;
 
 			return result;
@@ -206,7 +206,7 @@ namespace lmel
 
 		vector & operator+=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] += val;
 
 			return *this;
@@ -214,7 +214,7 @@ namespace lmel
 
 		vector & operator-=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] -= val;
 
 			return *this;
@@ -222,7 +222,7 @@ namespace lmel
 
 		vector & operator*=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] *= val;
 
 			return *this;
@@ -230,7 +230,7 @@ namespace lmel
 
 		vector & operator/=(T val)
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				data[i] /= val;
 
 			return *this;
@@ -240,7 +240,7 @@ namespace lmel
 
 		bool operator==(const vector & v) const
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				if (data[i] != v.data[i])
 					return false;
 
@@ -249,7 +249,7 @@ namespace lmel
 
 		bool operator!=(const vector & v) const
 		{
-			for (unsigned i = 0; i < size; ++i)
+			for (size_t i = 0; i < size; ++i)
 				if (data[i] != v.data[i])
 					return true;
 
