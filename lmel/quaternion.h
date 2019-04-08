@@ -25,7 +25,7 @@ namespace lmel
 		{}
 
 		// Constructor from axis and angle
-		explicit quaternion(vector<T, 3> axis, T angle)
+		quaternion(vector<T, 3> axis, T angle)
 		{
 			T s = sin(angle / 2);
 
