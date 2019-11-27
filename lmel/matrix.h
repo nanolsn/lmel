@@ -49,7 +49,7 @@ namespace lmel
 					data[i][j] = ref.data[i][j];
 		}
 
-		// Template copy constructor (for other types)
+		// Template copy constructor
 		template <typename O>
 		matrix(const matrix<O, N, M> & ref)
 		{
@@ -319,11 +319,11 @@ namespace lmel
 			return data[row][col];
 		}
 
-		template <typename T, unsigned N, unsigned M>
-		friend matrix<T, N, M> make_matrix_from_rows(std::initializer_list<vector<T, M>> il);
+		template <typename I, unsigned K, unsigned L>
+		friend matrix<I, K, L> make_matrix_from_rows(std::initializer_list<vector<I, L>> il);
 
-		template <typename T, unsigned N, unsigned M>
-		friend matrix<T, N, M> make_matrix_from_cols(std::initializer_list<vector<T, N>> il);
+		template <typename I, unsigned K, unsigned L>
+		friend matrix<I, K, L> make_matrix_from_cols(std::initializer_list<vector<I, K>> il);
 	};
 
 	template <unsigned N, unsigned M>

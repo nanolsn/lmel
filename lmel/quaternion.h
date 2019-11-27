@@ -29,9 +29,9 @@ namespace lmel
 		{
 			T s = sin(angle / 2);
 
-			x = axis.x() * s;
-			y = axis.y() * s;
-			z = axis.z() * s;
+			x = axis(0) * s;
+			y = axis(1) * s;
+			z = axis(2) * s;
 			w = cos(angle / 2);
 		}
 

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void test(bool condition)
+inline void test(bool condition)
 {
 	std::cout << (condition ? "OK." : "Fail!") << "\n";
 }

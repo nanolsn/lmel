@@ -65,37 +65,6 @@ namespace lmel
 			return *this;
 		}
 
-		// Member aliases:
-
-		T & x()
-		{
-			return data[0];
-		}
-
-		template <typename = typename std::enable_if<(N > 1), T>::type>
-		T & y()
-		{
-			return data[1];
-		}
-
-		template <typename = typename std::enable_if<(N > 2), T>::type>
-		T & z()
-		{
-			return data[2];
-		}
-
-		template <typename = typename std::enable_if<(N > 3), T>::type>
-		T & w()
-		{
-			return data[3];
-		}
-
-		template <typename = typename std::enable_if<(N > 4), T>::type>
-		T & v()
-		{
-			return data[4];
-		}
-
 		// vector length
 		double length() const
 		{
@@ -270,8 +239,8 @@ namespace lmel
 			return data[i];
 		}
 
-		template <typename T>
-		friend vector<T, 3> cross(const vector<T, 3> & v1, const vector<T, 3> & v2);
+		template <typename V>
+		friend vector<V, 3> cross(const vector<V, 3> & v1, const vector<V, 3> & v2);
 	};
 
 	// Cross product

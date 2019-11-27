@@ -39,7 +39,7 @@ namespace lmel
 					this->data[i][j] = ref.data[i][j];
 		}
 
-		// Template copy constructor (for other types)
+		// Template copy constructor
 		template <typename O>
 		square_matrix(const square_matrix<O, N> & ref)
 		{
@@ -262,20 +262,20 @@ namespace lmel
 					this->data[i][j] = tmp.data[j][i];
 		}
 
-		template <typename T, unsigned N>
-		friend T determinant(const square_matrix<T, N> & m);
+		template <typename K, unsigned L>
+		friend K determinant(const square_matrix<K, L> & m);
 
-		template <typename T>
-		friend T determinant(const square_matrix<T, 2> & m);
+		template <typename K>
+		friend K determinant(const square_matrix<K, 2> & m);
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_id_matrix();
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_id_matrix();
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il);
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_square_matrix_from_rows(std::initializer_list<vector<K, L>> il);
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_square_matrix_from_cols(std::initializer_list<vector<T, N>> il);
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_square_matrix_from_cols(std::initializer_list<vector<K, L>> il);
 	};
 
 	// 1x1 matrix specialization
@@ -417,17 +417,17 @@ namespace lmel
 
 		void transpose() {}
 
-		template <typename T>
-		friend T determinant(const square_matrix<T, 1> & m);
+		template <typename K>
+		friend K determinant(const square_matrix<K, 1> & m);
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_id_matrix();
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_id_matrix();
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il);
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_square_matrix_from_rows(std::initializer_list<vector<K, L>> il);
 
-		template <typename T, unsigned N>
-		friend square_matrix<T, N> make_square_matrix_from_cols(std::initializer_list<vector<T, N>> il);
+		template <typename K, unsigned L>
+		friend square_matrix<K, L> make_square_matrix_from_cols(std::initializer_list<vector<K, L>> il);
 	};
 
 	template <typename T>
@@ -480,7 +480,7 @@ namespace lmel
 		return result;
 	}
 
-	template <typename T, unsigned N>
+    template <typename T, unsigned N>
 	square_matrix<T, N> make_square_matrix_from_rows(std::initializer_list<vector<T, N>> il)
 	{
 		assert(il.size() == N);
