@@ -9,7 +9,7 @@ namespace lmel
 {
 	template <
 		typename T,
-		unsigned N,
+		size_t N,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value && N != 0, T>::type
 		>
 	class vector
@@ -18,7 +18,7 @@ namespace lmel
 		T data[N];
 
 	public:
-		static const unsigned size = N;
+		static const size_t size = N;
 
 		// Constructor with init value
 		explicit vector(T init = 0)
@@ -227,13 +227,13 @@ namespace lmel
 
 		// get/set selected element:
 
-		T & operator()(unsigned i)
+		T & operator()(size_t i)
 		{
 			assert(i < size);
 			return data[i];
 		}
 
-		const T & operator()(unsigned i) const
+		const T & operator()(size_t i) const
 		{
 			assert(i < size);
 			return data[i];

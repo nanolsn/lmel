@@ -8,41 +8,35 @@
 using namespace lmel;
 using namespace std;
 
-template <typename T, unsigned N>
-void show(const vector<T, N> & vec)
-{
-	for (unsigned i = 0; i < vec.size; ++i)
-		cout << vec(i) << " ";
+template<typename T, size_t N>
+void show(const vector<T, N> &vec) {
+    for (size_t i = 0; i < vec.size; ++i)
+        cout << vec(i) << " ";
 }
 
-template <typename T, unsigned N>
-void show(const square_matrix<T, N> & mat)
-{
-	for (unsigned i = 0; i < mat.rows; ++i)
-	{
-		for (unsigned j = 0; j < mat.cols; ++j)
-			cout << mat(i, j) << " ";
+template<typename T, size_t N>
+void show(const square_matrix<T, N> &mat) {
+    for (size_t i = 0; i < mat.rows; ++i) {
+        for (size_t j = 0; j < mat.cols; ++j)
+            cout << mat(i, j) << " ";
 
-		cout << "\n";
-	}
+        cout << "\n";
+    }
 }
 
-template <typename T, unsigned N, unsigned M>
-void show(const matrix<T, N, M> & mat)
-{
-	for (unsigned i = 0; i < mat.rows; ++i)
-	{
-		for (unsigned j = 0; j < mat.cols; ++j)
-			cout << mat(i, j) << " ";
+template<typename T, size_t N, size_t M>
+void show(const matrix<T, N, M> &mat) {
+    for (size_t i = 0; i < mat.rows; ++i) {
+        for (size_t j = 0; j < mat.cols; ++j)
+            cout << mat(i, j) << " ";
 
-		cout << "\n";
-	}
+        cout << "\n";
+    }
 }
 
-template <typename T>
-void show(const quaternion<T> & qt)
-{
-	cout << qt.x << " " << qt.y << " " << qt.z << " " << qt.w << "\n";
+template<typename T>
+void show(const quaternion<T> &qt) {
+    cout << qt.x << " " << qt.y << " " << qt.z << " " << qt.w << "\n";
 }
 
 #include "test/vector.cpp"
@@ -51,26 +45,24 @@ void show(const quaternion<T> & qt)
 #include "test/determinant.cpp"
 #include "test/quaternion.cpp"
 
-int main()
-{
-	cout << "Run tests:\n";
-	test_vector();
-	test_matrix();
-	test_square_matrix();
-	test_determinant();
-	test_quaternion();
+int main() {
+    cout << "Run tests:\n";
+    test_vector();
+    test_matrix();
+    test_square_matrix();
+    test_determinant();
+    test_quaternion();
 
-	quaternion<double> q(double_vector3d{ 1.0, 0.0, 0.0 }, 1.0);
-	show(q);
+    quaternion<double> q(double_vector3d{1.0, 0.0, 0.0}, 1.0);
+    show(q);
 
-	cout << "\n";
+    cout << "\n";
 
-	show(q.get_rotation_matrix3d());
+    show(q.get_rotation_matrix3d());
 
-	cout << "\n";
+    cout << "\n";
 
-	show(make_id_quaternion<double>());
+    show(make_id_quaternion<double>());
 
-	getchar();
-	return 0;
+    return 0;
 }
