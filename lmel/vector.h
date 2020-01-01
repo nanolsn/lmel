@@ -112,7 +112,7 @@ namespace lmel
 			return result;
 		}
 
-		vector operator*(const vector & val) const
+		T operator*(const vector & val) const
 		{
 			T prod = 0;
 
