@@ -81,7 +81,7 @@ namespace lmel
 		{
 			double len = length();
 
-			if (len == 0.0)
+			if (len <= std::numeric_limits<double>::epsilon())
                 return false;
 
 			for (size_t i = 0; i < size; ++i)

@@ -69,7 +69,7 @@ void test_vector() {
     // Normalize
     {
         int_vector3d v = {0, -2, 0};
-        v.normalize();
+        test(v.normalize());
         test(v == int_vector3d{0, -1, 0});
 
         int_vector3d z = {0, 0, 0};
