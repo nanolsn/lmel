@@ -65,4 +65,14 @@ void test_vector() {
         int_vector3d v2 = {4, 5, 6};
         test(cross(v1, v2) == int_vector3d{-3, -6, -3});
     }
+
+    // Normalize
+    {
+        int_vector3d v = {0, -2, 0};
+        v.normalize();
+        test(v == int_vector3d{0, -1, 0});
+
+        int_vector3d z = {0, 0, 0};
+        test(!z.normalize());
+    }
 }

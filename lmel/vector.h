@@ -65,7 +65,7 @@ namespace lmel
 			return *this;
 		}
 
-		// vector length
+		// Vector length
 		double length() const
 		{
 			T sum = 0;
@@ -77,12 +77,17 @@ namespace lmel
 		}
 
 		// Normalize vector
-		void normalize()
+		bool normalize()
 		{
 			double len = length();
 
+			if (len == 0.0)
+                return false;
+
 			for (size_t i = 0; i < size; ++i)
 				data[i] /= len;
+
+            return true;
 		}
 
 		// Default math operations:
